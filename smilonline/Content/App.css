@@ -1,0 +1,54 @@
+﻿/* Place custom styles below */
+.locationInput{
+    width: 110px;
+}
+
+.locationInputArea{
+    display: table-cell;
+}
+
+#info{
+    display: none;
+}
+
+#cover{
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    opacity: 0.8;
+    position: absolute;
+    display: none;
+}
+
+#configWidget{
+    position: relative;
+    background-color: lightgray;
+    color: black;
+    height: 14em;
+    width: 35em;
+    margin-left: auto;
+    margin-right: auto;
+    border-width: 1px;
+    border-color: rgba(150, 150, 150, 0.5);
+    border-style: solid;
+}
+
+#configWidgetForm{
+    position: relative;
+    margin: 20px;
+}
+
+#configWidgetFormBingKey{
+    width: 100%;
+}
+#configWidgetFormLocation{
+    margin-top: 20px;
+    display: table;
+    width: 100%;
+}
+#confirmConfigButton{
+    margin-right: 22px;
+    float:right;
+}

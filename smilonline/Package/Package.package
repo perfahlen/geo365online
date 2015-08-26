@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="878fc2e4-bc38-4721-9861-36ab1d43f73e" solutionId="878fc2e4-bc38-4721-9861-36ab1d43f73e" resetWebServer="false" sharePointProductVersion="15.0" name="SmilOnline" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <features>
+    <featureReference itemId="80113300-9574-4884-973c-b13f82b9a955" />
+  </features>
+</package>
