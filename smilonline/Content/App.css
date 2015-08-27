@@ -9,6 +9,11 @@
 
 #info{
     display: none;
+    font-size: x-large;
+}
+
+#infoOK{
+    float: right;
 }
 
 #cover{

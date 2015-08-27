@@ -36,10 +36,13 @@
 
     <div id="info">
         <p>
-            It seems to be the first time you use this app, you need to fill in some configuration. You can get a bing maps key from <a href="https://www.bingmapsportal.com">Bing Map Portal</a>.
-            This application will create a documentlibrary called SmilOnlineAssets to store configuration on the site. 
+            It seems to be the first time you use this app, you need to fill in some configuration. If you dont have i Bing Maps key, you can get one from <a href="https://www.bingmapsportal.com" target="_blank">Bing Map Portal</a>.
+            This application will create a document library called SmilOnlineAssets to store configuration on the site. 
             Enjoy.
         </p>
+        <div>
+            <input type="button" id="infoOK" value="OK lets start" />
+        </div>
     </div>
 
     <div id="cover">

@@ -4,7 +4,7 @@ var smilOnline = smilOnline || {};
 
 smilOnline.ensureConfiguration = function (tryAttempt) {
     var configDfd = jQuery.Deferred();
-    var url = smilOnline.baseServiceUrl + "/web/getfilebyserverrelativeurl('" + smilOnline.serverRelativeUrl + "/assets/smilOnline.jsn')/$value?@target='" + smilOnline.hostWebUrl + "'";
+    var url = smilOnline.baseServiceUrl + "/web/getfilebyserverrelativeurl('" + smilOnline.serverRelativeUrl + "/SmilOnlineAssets/smilOnline.jsn')/$value?@target='" + smilOnline.hostWebUrl + "'";
     jQuery.ajax({
         url: url,
         dataType: "json"
@@ -34,7 +34,7 @@ smilOnline.ensureConfiguration = function (tryAttempt) {
     };
 
     var folderExists = function () {
-        var url = smilOnline.baseServiceUrl + "/web/GetFolderByServerRelativeUrl('" + smilOnline.serverRelativeUrl + "/assets')?@target='" + smilOnline.hostWebUrl + "'";
+        var url = smilOnline.baseServiceUrl + "/web/GetFolderByServerRelativeUrl('" + smilOnline.serverRelativeUrl + "/SmilOnlineAssets')?@target='" + smilOnline.hostWebUrl + "'";
         var dfd = jQuery.Deferred();
         jQuery.ajax({
             url: url,
@@ -55,7 +55,7 @@ smilOnline.ensureConfiguration = function (tryAttempt) {
             __metadata: { type: 'SP.List' },
             BaseTemplate: 101,
             Description: 'List for smilonline assets',
-            Title: 'assets'
+            Title: 'SmilOnlineAssets '
         };
 
         var dataToSend = JSON.stringify(postObj);
@@ -77,23 +77,27 @@ smilOnline.ensureConfiguration = function (tryAttempt) {
 
     var createConfigFile = function () {
         var dfd = jQuery.Deferred();
-        jQuery("#cover").show();
-        jQuery("#confirmConfigButton").on("click", function () {
-            var config = new smilOnline.config();
-            var currentConfig = config.getFormConfiguration();
-            var url = smilOnline.baseServiceUrl + "/web/getfolderbyserverrelativeurl('" + smilOnline.serverRelativeUrl + "/assets')/files/add(overwrite=true,url='smilOnline.jsn')?@target='" + smilOnline.hostWebUrl + "'";
+        jQuery("#info").show();
+        jQuery("#infoOK").on("click", function () {
+            jQuery("#info").hide();
+            jQuery("#cover").show();
+            jQuery("#confirmConfigButton").on("click", function () {
+                var config = new smilOnline.config();
+                var currentConfig = config.getFormConfiguration();
+                var url = smilOnline.baseServiceUrl + "/web/getfolderbyserverrelativeurl('" + smilOnline.serverRelativeUrl + "/SmilOnlineAssets')/files/add(overwrite=true,url='smilOnline.jsn')?@target='" + smilOnline.hostWebUrl + "'";
 
-            var data = JSON.stringify(currentConfig);
+                var data = JSON.stringify(currentConfig);
 
-            jQuery.ajax({
-                url: url,
-                type: "POST",
-                dataType: 'json',
-                data: data
-            }).done(function (response) {
-                dfd.resolve(true);
-            }).fail(function (response) {
-                console.log(response);
+                jQuery.ajax({
+                    url: url,
+                    type: "POST",
+                    dataType: 'json',
+                    data: data
+                }).done(function (response) {
+                    dfd.resolve(true);
+                }).fail(function (response) {
+                    console.log(response);
+                });
             });
         });
         return dfd.promise();
