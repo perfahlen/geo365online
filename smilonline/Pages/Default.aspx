@@ -34,12 +34,30 @@
     <div id="map">
     </div>
 
+    <div id="layerWidget">
+        <ul>
+            <li>
+                <input type="checkbox" id="layer1" /><label for="layer1">Layer 1</label>
+
+            </li>
+            <li>
+                <input type="checkbox" id="layer2" /><label for="layer2">Layer 1</label>
+
+            </li>
+            <li>
+                <input type="checkbox" id="layer3" /><label for="layer3">Layer 1</label>
+
+            </li>
+        </ul>
+    </div>
+
     <div id="info">
         <p>
-            It seems to be the first time you use this app, you need to fill in some configuration. You can get a bing maps key from <a href="https://www.bingmapsportal.com">Bing Map Portal</a>.
+            It seems to be the first time you use this app, you need to fill in some configuration including a Bing Maps key. You can get a key from <a target="_blank" href="https://www.bingmapsportal.com">Bing Map Portal</a>.
             This application will create a documentlibrary called SmilOnlineAssets to store configuration on the site. 
             Enjoy.
         </p>
+        <input type="button" id="infoOK" value="OK" />
     </div>
 
     <div id="cover">

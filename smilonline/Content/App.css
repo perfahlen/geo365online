@@ -1,17 +1,40 @@
-﻿/* Place custom styles below */
-.locationInput{
+﻿.locationInput {
     width: 110px;
 }
 
-.locationInputArea{
+.locationInputArea {
     display: table-cell;
 }
 
-#info{
+#layerWidget {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    z-index: 10000;
+    background-color: white;
+    opacity: 0.7;
+    padding: 10px;
     display: none;
 }
 
-#cover{
+ul, li{
+    list-style-type: none;
+    list-style-position: inside;
+    margin: 0;
+    padding-right: 10px;
+    padding-left: 0px;
+}
+
+#info {
+    display: none;
+    font-size: x-large;
+}
+
+#infoOK {
+    float: right;
+}
+
+#cover {
     top: 0;
     bottom: 0;
     left: 0;
@@ -22,7 +45,7 @@
     display: none;
 }
 
-#configWidget{
+#configWidget {
     position: relative;
     background-color: lightgray;
     color: black;
@@ -35,20 +58,22 @@
     border-style: solid;
 }
 
-#configWidgetForm{
+#configWidgetForm {
     position: relative;
     margin: 20px;
 }
 
-#configWidgetFormBingKey{
+#configWidgetFormBingKey {
     width: 100%;
 }
-#configWidgetFormLocation{
+
+#configWidgetFormLocation {
     margin-top: 20px;
     display: table;
     width: 100%;
 }
-#confirmConfigButton{
+
+#confirmConfigButton {
     margin-right: 22px;
-    float:right;
+    float: right;
 }
