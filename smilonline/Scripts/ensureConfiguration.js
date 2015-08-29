@@ -81,13 +81,13 @@ smilOnline.ensureConfiguration = function (tryAttempt) {
         jQuery("#info").show();
         jQuery("#infoOK").on("click", function () {
             jQuery("#info").hide();
-            jQuery("#cover").show();
+        jQuery("#cover").show();
         });
 
         jQuery("#confirmConfigButton").on("click", function () {
             var config = new smilOnline.config();
             var currentConfig = config.getFormConfiguration();
-            var url = smilOnline.baseServiceUrl + "/web/getfolderbyserverrelativeurl('" + smilOnline.serverRelativeUrl + "/SmilOnlineAssets')/files/add(overwrite=true,url='smilOnline.jsn')?@target='" + smilOnline.hostWebUrl + "'";
+                var url = smilOnline.baseServiceUrl + "/web/getfolderbyserverrelativeurl('" + smilOnline.serverRelativeUrl + "/SmilOnlineAssets')/files/add(overwrite=true,url='smilOnline.jsn')?@target='" + smilOnline.hostWebUrl + "'";
 
             var data = JSON.stringify(currentConfig);
 
@@ -101,6 +101,7 @@ smilOnline.ensureConfiguration = function (tryAttempt) {
             }).fail(function (response) {
                 console.log(response);
             });
+        });
         });
         return dfd.promise();
     };
