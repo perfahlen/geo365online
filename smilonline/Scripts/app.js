@@ -41,6 +41,10 @@ smilOnline.initMap = function () {
             var mapOptions = smilOnline.configParser.getMapOptions(config);
             var mapContainer = jQuery("#map")[0];
             smilOnline.map = new Microsoft.Maps.Map(mapContainer, mapOptions);
+            var loadLayers = smilOnline.layers.load();
+            loadLayers.done(function (layers) {
+                console.log(layers);
+            });
         });
 
         jQuery(window).resize(windowResize);

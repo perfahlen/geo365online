@@ -60,6 +60,7 @@
     <Content Include="Scripts\Elements.xml" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\ensureConfiguration.js" />
+    <Content Include="Scripts\layers.js" />
     <Content Include="Scripts\libs\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\libs\jquery-1.9.1.js" />
     <Content Include="Scripts\libs\jquery-1.9.1.min.js" />

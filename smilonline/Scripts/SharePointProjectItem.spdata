@@ -10,5 +10,6 @@
     <ProjectItemFile Source="configParser.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="config.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="ensureConfiguration.js" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="layers.js" Target="Scripts\" Type="ElementFile" />
   </Files>
 </ProjectItem>

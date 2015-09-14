@@ -1,1 +1,82 @@
-﻿
+﻿'use strict';
+
+var smilOnline = smilOnline || {};
+
+smilOnline.layers = function () {
+    var siteLayers = [];
+
+    /*
+    Gets layers from site
+    */
+    var fetchFromSite = function () {
+        var dfd = jQuery.Deferred();
+        var url = smilOnline.baseServiceUrl + "/web/lists?$expand=Fields&@target='" + smilOnline.hostWebUrl + "'";
+        jQuery.ajax({
+            url: url,
+            dataType: 'json'
+        }).done(function (response) {
+            var geomLists = [];
+            response.d.results.forEach(function (list) {
+                var geometryFields = list.Fields.results.filter(function (field) {
+                    return field.Title == "Geometry";
+                });
+
+                if (geometryFields.length > 0) {
+                    geomLists.push({
+                        Title: list.Title,
+                        geometryField: true,
+                        geomotries: []
+                    });
+                }
+            });
+
+            siteLayers = geomLists.slice();
+
+            var geoms = getGeometries(geomLists);
+            geoms.done(function () {
+                dfd.resolve(siteLayers);
+            });
+        });
+
+        return dfd.promise();
+    };
+
+    /*
+    Loads geometries from site
+    */
+    var getGeometries = function (layers, dfd) {
+        if (!dfd) {
+            var dfd = jQuery.Deferred();
+        }
+        var currentLayer = layers.pop();
+        var url = smilOnline.baseServiceUrl + "/web/lists/GetByTitle('" + currentLayer.Title + "')/items?@target='" + smilOnline.hostWebUrl + "'";
+        jQuery.ajax({
+            url: url,
+            dataType: 'json',
+            context: dfd
+        }).done(function (response) {
+            var siteLayer = siteLayers.filter(function(s){
+                return s.Title === currentLayer.Title;
+            })[0];
+
+            response.d.results.forEach(function (item) {
+                if (item.Geometry) {
+                    siteLayer.geomotries.push(item.Geometry);
+                }
+            });
+            
+            if (layers.length > 0) {
+                getGeometries(layers, dfd);
+            }
+            else {
+                dfd.resolve();
+            }
+        });
+
+        return dfd.promise();
+    };
+
+    return {
+        load: fetchFromSite
+    };
+}();

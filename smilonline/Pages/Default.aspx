@@ -20,6 +20,7 @@
     <script type="text/javascript" src="../Scripts/app.js"></script>
     <script type="text/javascript" src="../Scripts/ensureConfiguration.js"></script>
     <script type="text/javascript" src="../Scripts/configParser.js"></script>
+     <script type="text/javascript" src="../Scripts/layers.js"></script>
     <script type="text/javascript" src="../Scripts/config.js"></script>
 </asp:Content>
 
@@ -36,18 +37,7 @@
 
     <div id="layerWidget">
         <ul>
-            <li>
-                <input type="checkbox" id="layer1" /><label for="layer1">Layer 1</label>
-
-            </li>
-            <li>
-                <input type="checkbox" id="layer2" /><label for="layer2">Layer 1</label>
-
-            </li>
-            <li>
-                <input type="checkbox" id="layer3" /><label for="layer3">Layer 1</label>
-
-            </li>
+           
         </ul>
     </div>
 

@@ -102,7 +102,6 @@ smilOnline.ensureConfiguration = function (tryAttempt) {
                 console.log(response);
             });
         });
-        });
         return dfd.promise();
     };
 
