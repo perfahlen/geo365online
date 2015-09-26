@@ -10,7 +10,6 @@ smilOnline.ensureConfiguration = function (tryAttempt) {
         dataType: "json"
     }).done(function (config) {
         configDfd.resolve(config);
-        jQuery("#layerWidget").show();
     }).fail(function (response) {
         ensureConfigFile(tryAttempt);
     });

@@ -10,5 +10,10 @@
     <File Path="Scripts\config.js" Url="Scripts/config.js" ReplaceContent="TRUE" />
     <File Path="Scripts\ensureConfiguration.js" Url="Scripts/ensureConfiguration.js" ReplaceContent="TRUE" />
     <File Path="Scripts\layers.js" Url="Scripts/layers.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\layerWidget.js" Url="Scripts/layerWidget.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\libs\WKTModule-min.js" Url="Scripts/libs/WKTModule-min.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\BingMapsExtension.js" Url="Scripts/BingMapsExtension.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\libs\V7CustomInfobox.min.js" Url="Scripts/libs/V7CustomInfobox.min.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\common.js" Url="Scripts/common.js" ReplaceContent="TRUE" />
   </Module>
 </Elements>

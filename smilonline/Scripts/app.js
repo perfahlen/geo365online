@@ -41,10 +41,18 @@ smilOnline.initMap = function () {
             var mapOptions = smilOnline.configParser.getMapOptions(config);
             var mapContainer = jQuery("#map")[0];
             smilOnline.map = new Microsoft.Maps.Map(mapContainer, mapOptions);
-            var loadLayers = smilOnline.layers.load();
-            loadLayers.done(function (layers) {
-                console.log(layers);
+            Microsoft.Maps.registerModule("WKTModule", "../Scripts/libs/WKTModule-min.js");
+            Microsoft.Maps.loadModule("WKTModule");
+
+            Microsoft.Maps.registerModule("CustomInfoboxModule", "../Scripts/libs/V7CustomInfobox.min.js");
+            Microsoft.Maps.loadModule("CustomInfoboxModule", {
+                callback: function () {
+                    smilOnline.customInfobox = new CustomInfobox(smilOnline.map);
+                }
             });
+
+            smilOnline.layers.load();
+
         });
 
         jQuery(window).resize(windowResize);

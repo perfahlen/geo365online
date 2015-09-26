@@ -9,7 +9,7 @@ smilOnline.layers = function () {
     Gets layers from site
     */
     var fetchFromSite = function () {
-        var dfd = jQuery.Deferred();
+        //var dfd = jQuery.Deferred();
         var url = smilOnline.baseServiceUrl + "/web/lists?$expand=Fields&@target='" + smilOnline.hostWebUrl + "'";
         jQuery.ajax({
             url: url,
@@ -25,7 +25,7 @@ smilOnline.layers = function () {
                     geomLists.push({
                         Title: list.Title,
                         geometryField: true,
-                        geomotries: []
+                        geometries: []
                     });
                 }
             });
@@ -34,11 +34,9 @@ smilOnline.layers = function () {
 
             var geoms = getGeometries(geomLists);
             geoms.done(function () {
-                dfd.resolve(siteLayers);
+                smilOnline.layerWidget.initLayerWidget(siteLayers);
             });
         });
-
-        return dfd.promise();
     };
 
     /*
@@ -61,7 +59,17 @@ smilOnline.layers = function () {
 
             response.d.results.forEach(function (item) {
                 if (item.Geometry) {
-                    siteLayer.geomotries.push(item.Geometry);
+                    var metaData = {};
+                    metaData.attributes = {};
+                    var metaData = {
+                        geometry: item.Geometry,
+                        attributes: {
+                            id: item.ID,
+                            GUID: item.GUID,
+                            Title: siteLayer.Title
+                        }
+                    };
+                    siteLayer.geometries.push(metaData);
                 }
             });
             
@@ -75,6 +83,12 @@ smilOnline.layers = function () {
 
         return dfd.promise();
     };
+
+    /*
+     Populate layer control
+    */
+
+    var populateLayerControl = function () { };
 
     return {
         load: fetchFromSite

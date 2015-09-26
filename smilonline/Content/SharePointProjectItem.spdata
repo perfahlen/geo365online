@@ -3,5 +3,7 @@
   <Files>
     <ProjectItemFile Source="Elements.xml" Target="Content\" Type="ElementManifest" />
     <ProjectItemFile Source="App.css" Target="Content\" Type="ElementFile" />
+    <ProjectItemFile Source="font-awesome.min.css" Target="Content\" Type="ElementFile" />
+    <ProjectItemFile Source="font-awesome.css" Target="Content\" Type="ElementFile" />
   </Files>
 </ProjectItem>

@@ -15,13 +15,19 @@
 
     <!-- Add your CSS styles to the following file -->
     <link rel="Stylesheet" type="text/css" href="../Content/App.css" />
-
+    <link href="../Content/font-awesome.min.css" rel="stylesheet" />
+    
     <!-- Add your JavaScript to the following file -->
+    <script type="text/javascript" src="../Scripts/BingMapsExtension.js"
+    <script type="text/javascript" src="../Scripts/libs/WKTModule-min.js"></script>
+    <script type="text/javascript" src="../Scripts/libs/V7CustomInfobox.min.js"></script>
     <script type="text/javascript" src="../Scripts/app.js"></script>
     <script type="text/javascript" src="../Scripts/ensureConfiguration.js"></script>
     <script type="text/javascript" src="../Scripts/configParser.js"></script>
-     <script type="text/javascript" src="../Scripts/layers.js"></script>
+    <script type="text/javascript" src="../Scripts/layers.js"></script>
+    <script type="text/javascript" src="../Scripts/layerWidget.js"></script>
     <script type="text/javascript" src="../Scripts/config.js"></script>
+    <script type="text/javascript" src="../Scripts/common.js"></script>
 </asp:Content>
 
 <%-- The markup in the following Content element will be placed in the TitleArea of the page --%>
@@ -36,9 +42,11 @@
     </div>
 
     <div id="layerWidget">
+        <div id="spLayers"><span id="layerWidgetHeadline">SharePoint Layers</span>&nbsp;<span id="layerWidgetIcon" class="fa fa-spinner fa-spin"></span></div>
+        <div>
         <ul>
-           
         </ul>
+        </div>
     </div>
 
     <div id="info">

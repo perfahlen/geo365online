@@ -11,5 +11,10 @@
     <ProjectItemFile Source="config.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="ensureConfiguration.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="layers.js" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="layerWidget.js" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="libs\WKTModule-min.js" Target="Scripts\libs\" Type="ElementFile" />
+    <ProjectItemFile Source="BingMapsExtension.js" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="libs\V7CustomInfobox.min.js" Target="Scripts\libs\" Type="ElementFile" />
+    <ProjectItemFile Source="common.js" Target="Scripts\" Type="ElementFile" />
   </Files>
 </ProjectItem>
