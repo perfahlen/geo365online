@@ -84,12 +84,6 @@ smilOnline.layers = function () {
         return dfd.promise();
     };
 
-    /*
-     Populate layer control
-    */
-
-    var populateLayerControl = function () { };
-
     return {
         load: fetchFromSite
     };
