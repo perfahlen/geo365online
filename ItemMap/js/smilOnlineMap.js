@@ -53,7 +53,18 @@ var smilOnline = function () {
     };
 
     var displayForm = function (ctx) {
-        currentCtx = ctx;
+        smilOnline.state = "view";
+        var mapElem = createMapElement(ctx);
+        return mapElem;
+    };
+
+    var editForm = function (ctx) {
+        smilOnline.state = "edit";
+        var mapElem = createMapElement(ctx);
+        return mapElem;
+    };
+
+    var createMapElement = function (ctx) {
         var elemID = this.guid();
         var geom = ctx.CurrentItem[ctx.CurrentFieldSchema.Name];
         if (geom === '') {
@@ -64,7 +75,6 @@ var smilOnline = function () {
         var elem = geom;
         elem += '<div style="height: 400px; width: 400px; position: relative;" id="' + elemID + '"></div>';
         smilOnline.renderElemId = elemID;
-        smilOnline.state = "view";
         return elem;
     };
 
@@ -93,18 +103,9 @@ var smilOnline = function () {
                 });
             }
         }, 50);
-
     };
 
-    loadModules = function (callback) {
-        Microsoft.Maps.registerModule("WKTModule", (smilOnline.getSiteUrl() + "/SmilOnlineAssets/WKTModule-min.js"));
-        Microsoft.Maps.loadModule("WKTModule", {
-            callback: function () {
-                callback();
-            }
-        });
-    };
-
+    
     renderViewMap = function (mapOptions) {
         var elem = document.getElementById(smilOnline.renderElemId);
         smilOnline.map = new Microsoft.Maps.Map(elem, mapOptions);
@@ -133,17 +134,35 @@ var smilOnline = function () {
         return locations;
     };
 
-
-
     renderNewMap = function () {
         var elem = document.getElementById(smilOnline.renderElemId);
     };
 
     renderEditMap = function () {
         var elem = document.getElementById(smilOnline.renderElemId);
+        smilOnline.map = new Microsoft.Maps.Map(elem, mapOptions);
+        var wktValue = elem.previousSibling.innerHTML;
+        elem.previousSibling.style.display = "none";
+        var geom = WKTModule.Read(wktValue);
+        smilOnline.map.entities.push(geom);
+        zoomToEntity(geom);
     };
 
-    //url can be [] or string
+    loadModule = function (module, callback) {
+        
+        if (module === "wkt") {
+            Microsoft.Maps.registerModule("WKTModule", (smilOnline.getSiteUrl() + "/SmilOnlineAssets/WKTModule-min.js"));
+            Microsoft.Maps.loadModule("WKTModule", {
+                callback: function () {
+                    callback();
+                }
+            });
+        }
+        else if (module === "drawingtools") {
+
+        }
+    };
+
     var addScript = function (urls, callback) {
 
         var processQueue = function (urls) {
@@ -154,8 +173,6 @@ var smilOnline = function () {
 
         var script = document.createElement("script");
         script.type = "text/javascript";
-
-
 
         if (script.readyState) {
             script.onreadystatechange = function () {
@@ -176,6 +193,7 @@ var smilOnline = function () {
     return {
         addScript: addScript,
         displayForm: displayForm,
+        editForm: editForm,
         renderMap: renderMap,
         getSiteUrl: siteUrl
     };
