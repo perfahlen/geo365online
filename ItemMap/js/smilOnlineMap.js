@@ -60,8 +60,15 @@ var smilOnline = function () {
 
     var editForm = function (ctx) {
         smilOnline.state = "edit";
-        var mapElem = createMapElement(ctx);
-        return mapElem;
+        var geoElem = createToolbar();
+        geoElem += createMapElement(ctx);
+        return geoElem;
+    };
+
+    var createToolbar = function () {
+        var elemID = this.guid();
+        var elem = '<div id="' + elemID + '"></div>';
+        return elem;
     };
 
     var createMapElement = function (ctx) {
@@ -81,31 +88,37 @@ var smilOnline = function () {
     renderMap = function () {
         var intervalId = setInterval(function () {
             if (smilOnline.bingMaps && Microsoft && Microsoft.Maps && Microsoft.Maps.Map) {
-                loadModules(function () {
-                    clearInterval(intervalId);
-                    loadConfig(function (config) {
-                        var mapOptions = smilOnline.configParser.getMapOptions(config);
-                        switch (smilOnline.state) {
-                            case "edit":
-                                renderEditMap(mapOptions);
-                                break;
-                            case "new":
-                                renderNewMap(mapOptions);
-                                break;
-                            case "list":
-                                renderListMap(mapOptions);
-                                break;
-                            default:
+
+                clearInterval(intervalId);
+                loadConfig(function (config) {
+                    var mapOptions = smilOnline.configParser.getMapOptions(config);
+                    switch (smilOnline.state) {
+                        case "edit":
+                            loadModule("wkt", function () {
+                                loadModule("drawingtools", function () {
+                                    renderEditMap(mapOptions);
+                                });
+                            });
+
+                            break;
+                        case "new":
+                            renderNewMap(mapOptions);
+                            break;
+                        case "list":
+                            renderListMap(mapOptions);
+                            break;
+                        default:
+                            loadModule("wkt", function () {
                                 renderViewMap(mapOptions);
-                                break;
-                        }
-                    });
+                            });
+                            break;
+                    }
                 });
             }
         }, 50);
     };
 
-    
+
     renderViewMap = function (mapOptions) {
         var elem = document.getElementById(smilOnline.renderElemId);
         smilOnline.map = new Microsoft.Maps.Map(elem, mapOptions);
@@ -138,18 +151,23 @@ var smilOnline = function () {
         var elem = document.getElementById(smilOnline.renderElemId);
     };
 
-    renderEditMap = function () {
+    renderEditMap = function (mapOptions) {
         var elem = document.getElementById(smilOnline.renderElemId);
         smilOnline.map = new Microsoft.Maps.Map(elem, mapOptions);
-        var wktValue = elem.previousSibling.innerHTML;
-        elem.previousSibling.style.display = "none";
-        var geom = WKTModule.Read(wktValue);
+        var wktValue = elem.previousSibling;
+        var geom = WKTModule.Read(wktValue.data);
+        wktValue.remove();
         smilOnline.map.entities.push(geom);
         zoomToEntity(geom);
+
+        var toolbarID = elem.parentNode.firstElementChild.id;
+        debugger;
+        var drawingTools = new DrawingTools.DrawingManager(smilOnline.map);
     };
 
+    //refactor to be able to send in module[]
     loadModule = function (module, callback) {
-        
+
         if (module === "wkt") {
             Microsoft.Maps.registerModule("WKTModule", (smilOnline.getSiteUrl() + "/SmilOnlineAssets/WKTModule-min.js"));
             Microsoft.Maps.loadModule("WKTModule", {
@@ -159,7 +177,12 @@ var smilOnline = function () {
             });
         }
         else if (module === "drawingtools") {
-
+            Microsoft.Maps.registerModule("DrawingToolsModule", (smilOnline.getSiteUrl() + "/SmilOnlineAssets/DrawingToolsModule.js"));
+            Microsoft.Maps.loadModule("DrawingToolsModule", {
+                callback: function () {
+                    callback();
+                }
+            });
         }
     };
 
