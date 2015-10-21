@@ -67,7 +67,7 @@ var smilOnline = function () {
 
     var createToolbar = function () {
         var elemID = this.guid();
-        var elem = '<div id="' + elemID + '"></div>';
+        var elem = '<div style="height: 50px; width: 400px; position: relative; background-color: red;" id="' + elemID + '"></div>';
         return elem;
     };
 
@@ -161,7 +161,6 @@ var smilOnline = function () {
         zoomToEntity(geom);
 
         var toolbarID = elem.parentNode.firstElementChild.id;
-        debugger;
         var drawingTools = new DrawingTools.DrawingManager(smilOnline.map);
     };
 
@@ -213,6 +212,15 @@ var smilOnline = function () {
         document.body.appendChild(script);
     };
 
+    addCss = function (url) {
+        var css = document.createElement("link");
+        css.type = "text/css";
+        css.rel = "Stylesheet";
+        css.href = "../Content/App.css"
+
+        document.body.appendChild(css);
+    };
+
     return {
         addScript: addScript,
         displayForm: displayForm,
@@ -229,7 +237,8 @@ document.onreadystatechange = function () {
     if (state == 'complete') {
         var scriptsToAdd = ["http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0",
                            (smilOnline.getSiteUrl() + "/SmilOnlineAssets/config.js"),
-                           (smilOnline.getSiteUrl() + "/SmilOnlineAssets/configParser.js")];
+                           (smilOnline.getSiteUrl() + "/SmilOnlineAssets/configParser.js"),
+                           (smilOnline.getSiteUrl() + "/SmilOnlineAssets/")];
 
         smilOnline.addScript(scriptsToAdd, function scriptsLoaded() {
             smilOnline.bingMaps = true;
