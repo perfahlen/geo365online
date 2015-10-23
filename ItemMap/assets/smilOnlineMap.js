@@ -67,7 +67,7 @@ var smilOnline = function () {
 
     var createToolbar = function () {
         var elemID = this.guid();
-        var elem = '<div style="height: 50px; width: 400px; position: relative; background-color: red;" id="' + elemID + '"></div>';
+        var elem = '<div style="height: 34px; margin-bottom: 5px; width: 400px; position: relative; background-color: #FAF7F5" id="' + elemID + '"></div>';
         return elem;
     };
 
@@ -151,6 +151,26 @@ var smilOnline = function () {
         var elem = document.getElementById(smilOnline.renderElemId);
     };
 
+    setDigitizerIcons = function () {
+        var imageUrl = (smilOnline.getSiteUrl() + '/SmilOnlineAssets/DrawingTools_ToolbarIcons.png');
+
+        var polyLineElem = document.getElementsByClassName("drawingToolsIcon_polyline")[0];
+        polyLineElem.style.backgroundImage = 'url("' + imageUrl + '")';
+
+        var pushpinElem = document.getElementsByClassName("drawingToolsIcon_pushpin")[0];
+        pushpinElem.style.backgroundImage = 'url("' + imageUrl + '")';
+
+        var polygonElem = document.getElementsByClassName("drawingToolsIcon_polygon")[0];
+        polygonElem.style.backgroundImage = 'url("' + imageUrl + '")';
+
+        var eraseElem = document.getElementsByClassName("drawingToolsIcon_erase")[0];
+        eraseElem.style.backgroundImage = 'url("' + imageUrl + '")';
+
+        var editElem = document.getElementsByClassName("drawingToolsIcon_edit")[0];
+        editElem.style.backgroundImage = 'url("' + imageUrl + '")';
+
+    };
+
     renderEditMap = function (mapOptions) {
         var elem = document.getElementById(smilOnline.renderElemId);
         smilOnline.map = new Microsoft.Maps.Map(elem, mapOptions);
@@ -160,11 +180,8 @@ var smilOnline = function () {
         smilOnline.map.entities.push(geom);
         zoomToEntity(geom);
 
-
         var toolbarElement = elem.parentNode.firstElementChild;
-        toolbarElement.style.backgroundImage = (smilOnline.getSiteUrl() + "/SmilOnlineAssets/DrawingTools_ToolbarIcons.png");
         Microsoft.Maps.registerModule("DrawingToolsModule", (smilOnline.getSiteUrl() + "/SmilOnlineAssets/DrawingToolsModule.js"));
-
         Microsoft.Maps.loadModule("DrawingToolsModule", {
             callback: function () {
                 //Create an instance of the drawing tools.
@@ -172,7 +189,7 @@ var smilOnline = function () {
                     toolbarContainer: toolbarElement,
                     toolbarOptions: {
                         //Only show a few of the drawing modes and none of the style tools.
-                        drawingModes: ['polyline', 'polygon', 'circle', 'rectangle', 'erase', 'edit'],
+                        drawingModes: ['pushpin', 'polyline', 'polygon', 'erase', 'edit'],
                         styleTools: []
                     },
                     events: {
@@ -191,6 +208,7 @@ var smilOnline = function () {
                     }
                 });
 
+                setDigitizerIcons();
                 //Create a layer for rendering distance info on.
                 var infoLayer = new Microsoft.Maps.EntityCollection();
                 smilOnline.map.entities.push(infoLayer);
