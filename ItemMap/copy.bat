@@ -1,0 +1,1 @@
+﻿copy .\js\smilOnline.js \\win-hv7sk10bcsr\sites\smilonline\SmilOnlineAssets

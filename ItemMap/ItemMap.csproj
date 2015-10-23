@@ -66,8 +66,15 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\config.js" />
+    <Content Include="assets\configParser.js" />
+    <Content Include="assets\DrawingTools.css" />
+    <Content Include="assets\DrawingToolsModule.js" />
+    <Content Include="assets\DrawingTools_ToolbarIcons.png" />
+    <Content Include="assets\WKTModule-min.js" />
     <Content Include="packages.config" />
     <Content Include="readme.txt" />
+    <Content Include="copy.bat" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -77,7 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ItemMap.html" />
-    <Content Include="js\smilOnlineMap.js" />
+    <Content Include="assets\smilOnlineMap.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -116,6 +123,10 @@
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -160,8 +160,42 @@ var smilOnline = function () {
         smilOnline.map.entities.push(geom);
         zoomToEntity(geom);
 
-        var toolbarID = elem.parentNode.firstElementChild.id;
-        var drawingTools = new DrawingTools.DrawingManager(smilOnline.map);
+
+        var toolbarElement = elem.parentNode.firstElementChild;
+        toolbarElement.style.backgroundImage = (smilOnline.getSiteUrl() + "/SmilOnlineAssets/DrawingTools_ToolbarIcons.png");
+        Microsoft.Maps.registerModule("DrawingToolsModule", (smilOnline.getSiteUrl() + "/SmilOnlineAssets/DrawingToolsModule.js"));
+
+        Microsoft.Maps.loadModule("DrawingToolsModule", {
+            callback: function () {
+                //Create an instance of the drawing tools.
+                drawingTools = new DrawingTools.DrawingManager(smilOnline.map, {
+                    toolbarContainer: toolbarElement,
+                    toolbarOptions: {
+                        //Only show a few of the drawing modes and none of the style tools.
+                        drawingModes: ['polyline', 'polygon', 'circle', 'rectangle', 'erase', 'edit'],
+                        styleTools: []
+                    },
+                    events: {
+                        drawingEnded: function (s) {
+                            //showMeasurements(s);
+                        },
+                        drawingChanging: function (s) {
+                            //showMeasurements(s);
+                        },
+                        drawingChanged: function (s) {
+                            //showMeasurements(s);
+                        },
+                        drawingErased: function (s) {
+                            //infoLayer.clear();
+                        }
+                    }
+                });
+
+                //Create a layer for rendering distance info on.
+                var infoLayer = new Microsoft.Maps.EntityCollection();
+                smilOnline.map.entities.push(infoLayer);
+            }
+        });
     };
 
     //refactor to be able to send in module[]
@@ -176,12 +210,7 @@ var smilOnline = function () {
             });
         }
         else if (module === "drawingtools") {
-            Microsoft.Maps.registerModule("DrawingToolsModule", (smilOnline.getSiteUrl() + "/SmilOnlineAssets/DrawingToolsModule.js"));
-            Microsoft.Maps.loadModule("DrawingToolsModule", {
-                callback: function () {
-                    callback();
-                }
-            });
+            callback();
         }
     };
 
@@ -216,7 +245,7 @@ var smilOnline = function () {
         var css = document.createElement("link");
         css.type = "text/css";
         css.rel = "Stylesheet";
-        css.href = "../Content/App.css"
+        css.href = (smilOnline.getSiteUrl() + "/SmilOnlineAssets/DrawingTools.css");
 
         document.body.appendChild(css);
     };
@@ -226,7 +255,8 @@ var smilOnline = function () {
         displayForm: displayForm,
         editForm: editForm,
         renderMap: renderMap,
-        getSiteUrl: siteUrl
+        getSiteUrl: siteUrl,
+        addCss: addCss
     };
 
 }();
@@ -237,13 +267,13 @@ document.onreadystatechange = function () {
     if (state == 'complete') {
         var scriptsToAdd = ["http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0",
                            (smilOnline.getSiteUrl() + "/SmilOnlineAssets/config.js"),
-                           (smilOnline.getSiteUrl() + "/SmilOnlineAssets/configParser.js"),
-                           (smilOnline.getSiteUrl() + "/SmilOnlineAssets/")];
+                           (smilOnline.getSiteUrl() + "/SmilOnlineAssets/configParser.js")];
 
         smilOnline.addScript(scriptsToAdd, function scriptsLoaded() {
             smilOnline.bingMaps = true;
             smilOnline.renderMap();
         });
+        smilOnline.addCss();
     }
 };
 

@@ -148,7 +148,7 @@ var DrawingTools = {
         //Default Options
         var _options = {
             /// <field type='DOMElement'>A reference to a DOM element where the toolbar should be loaded to.</field>
-            toolbarContainer: null,
+            toolbarContainer: options.toolbarContainer || null,
             /// <field type='Object(ToolbarOptions)'>Options that specify how the toolbar should be rendered.</field>
             toolbarOptions: {
                 /// <field type='DrawingTools.DrawingMode[]'>A list of drawing modes to show in the toolbar. Icons will be ordered in the toolbar as they are in the array.
@@ -944,15 +944,20 @@ var DrawingTools = {
                     if (obj2[p].constructor == Object && "undefined" != typeof (obj1[p])) {
                         obj1[p] = obj2[p];
 
-                    } else {
+                    }
+                    if (typeof(p) === "string") {
+                        obj1[p] = obj2[p];
+                    }
+                    else {
                         obj1[p] = deepMerge(obj1[p], obj2[p]);
 
                     }
 
                 } catch (e) {
                     // Property in destination object not set; create it and set its value.
-                    obj1[p] = obj2[p];
-
+                    if (obj2[p]){
+                        obj1[p] = obj2[p];
+                    }
                 }
             }
 
@@ -1100,6 +1105,8 @@ var DrawingTools = {
                     }
                 }
 
+                toolbarContainer = options.toolbarContainer;
+                
                 toolbarContainer.appendChild(toolbar);
             }
         }
