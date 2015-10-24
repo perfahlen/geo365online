@@ -175,13 +175,13 @@ var smilOnline = function () {
         var elem = document.getElementById(smilOnline.renderElemId);
         smilOnline.map = new Microsoft.Maps.Map(elem, mapOptions);
         var wktValue = elem.previousSibling;
+        elem.setAttribute("data-wkt", wktValue.data);
         var geom = WKTModule.Read(wktValue.data);
         wktValue.remove();
-        smilOnline.map.entities.push(geom);
+        //smilOnline.map.entities.push(geom);
         zoomToEntity(geom);
 
         var toolbarElement = elem.parentNode.firstElementChild;
-        Microsoft.Maps.registerModule("DrawingToolsModule", (smilOnline.getSiteUrl() + "/SmilOnlineAssets/DrawingToolsModule.js"));
         Microsoft.Maps.loadModule("DrawingToolsModule", {
             callback: function () {
                 //Create an instance of the drawing tools.
@@ -189,29 +189,30 @@ var smilOnline = function () {
                     toolbarContainer: toolbarElement,
                     toolbarOptions: {
                         //Only show a few of the drawing modes and none of the style tools.
-                        drawingModes: ['pushpin', 'polyline', 'polygon', 'erase', 'edit'],
+                        drawingModes: ['pushpin', 'polyline', 'polygon', 'edit', 'erase'],
                         styleTools: []
                     },
                     events: {
                         drawingEnded: function (s) {
-                            //showMeasurements(s);
+                            //console.log("end: ", s);
                         },
                         drawingChanging: function (s) {
-                            //showMeasurements(s);
+                            //console.log("changing: ", s);
                         },
                         drawingChanged: function (s) {
-                            //showMeasurements(s);
+                            var wkt = WKTModule.Write(s);
+                            console.log(wkt);
                         },
                         drawingErased: function (s) {
-                            //infoLayer.clear();
+                            //console.log("erased: ", s);
                         }
                     }
                 });
 
                 setDigitizerIcons();
-                //Create a layer for rendering distance info on.
-                var infoLayer = new Microsoft.Maps.EntityCollection();
-                smilOnline.map.entities.push(infoLayer);
+
+                var drawingLayer = smilOnline.map.entities.get(0);
+                drawingLayer.push(geom);
             }
         });
     };
@@ -228,6 +229,7 @@ var smilOnline = function () {
             });
         }
         else if (module === "drawingtools") {
+            Microsoft.Maps.registerModule("DrawingToolsModule", (smilOnline.getSiteUrl() + "/SmilOnlineAssets/DrawingToolsModule.js"));
             callback();
         }
     };
