@@ -35,13 +35,6 @@ var smilOnline = function () {
 
     };
 
-    var registerEditFormCallBack = function (formContext) {
-        var element = document.getElementById(formContext.fieldSchema.Id + '_' + formContext.fieldName);
-        var val = element.value;
-        return val;
-    };
-
-    // is this really needed
     var getQueryStringParameter = function (param) {
         var params = document.URL.split("?")[1].split("&");
         var strParams = "";
@@ -52,6 +45,13 @@ var smilOnline = function () {
         }
     };
 
+    var registerEditFormCallBack = function (formContext) {
+        var element = document.getElementById(formContext.fieldSchema.Id + '_' + formContext.fieldName);
+        var val = element.value;
+        return val;
+    };
+
+    
     var displayForm = function (ctx) {
         smilOnline.state = "view";
         var mapElem = createMapElement(ctx);
@@ -59,8 +59,14 @@ var smilOnline = function () {
     };
 
     var editForm = function (ctx) {
+
+        var formContext = SPClientTemplates.Utility.GetFormContextForCurrentField(ctx);
+        formContext.registerGetValueCallback(formContext.fieldName, registerEditFormCallBack.bind(null, formContext));
+
         smilOnline.state = "edit";
-        var geoElem = createToolbar();
+        smilOnline.geomTxtfieldId = (formContext.fieldSchema.Id + '_' + formContext.fieldName);
+        var geoElem = '<input type="text" id="' + smilOnline.geomTxtfieldId + '" value="' + ctx.CurrentFieldValue + '" style="visibility: visible;" />';
+        geoElem += createToolbar();
         geoElem += createMapElement(ctx);
         return geoElem;
     };
@@ -68,6 +74,7 @@ var smilOnline = function () {
     var createToolbar = function () {
         var elemID = this.guid();
         var elem = '<div style="height: 34px; margin-bottom: 5px; width: 400px; position: relative; background-color: #FAF7F5" id="' + elemID + '"></div>';
+        smilOnline.toolbarElementId = elemID;
         return elem;
     };
 
@@ -79,13 +86,12 @@ var smilOnline = function () {
         }
         var guid = this.guid();
 
-        var elem = geom;
-        elem += '<div style="height: 400px; width: 400px; position: relative;" id="' + elemID + '"></div>';
+        var elem = '<div style="height: 400px; width: 400px; position: relative;" id="' + elemID + '"></div>';
         smilOnline.renderElemId = elemID;
         return elem;
     };
 
-    renderMap = function () {
+    var renderMap = function () {
         var intervalId = setInterval(function () {
             if (smilOnline.bingMaps && Microsoft && Microsoft.Maps && Microsoft.Maps.Map) {
 
@@ -119,7 +125,7 @@ var smilOnline = function () {
     };
 
 
-    renderViewMap = function (mapOptions) {
+    var renderViewMap = function (mapOptions) {
         var elem = document.getElementById(smilOnline.renderElemId);
         smilOnline.map = new Microsoft.Maps.Map(elem, mapOptions);
         var wktValue = elem.previousSibling.innerHTML;
@@ -129,7 +135,7 @@ var smilOnline = function () {
         zoomToEntity(geom);
     };
 
-    zoomToEntity = function (entity) {
+    var zoomToEntity = function (entity) {
         var locations = getLocations(entity);
         if (locations.length > 0) {
             var locationRect = Microsoft.Maps.LocationRect.fromLocations(locations);
@@ -137,7 +143,7 @@ var smilOnline = function () {
         }
     };
 
-    getLocations = function (entity) {
+    var getLocations = function (entity) {
         var locations = [];
 
         if (entity instanceof Microsoft.Maps.Pushpin) {
@@ -147,11 +153,11 @@ var smilOnline = function () {
         return locations;
     };
 
-    renderNewMap = function () {
+    var renderNewMap = function () {
         var elem = document.getElementById(smilOnline.renderElemId);
     };
 
-    setDigitizerIcons = function () {
+    var setDigitizerIcons = function () {
         var imageUrl = (smilOnline.getSiteUrl() + '/SmilOnlineAssets/DrawingTools_ToolbarIcons.png');
 
         var polyLineElem = document.getElementsByClassName("drawingToolsIcon_polyline")[0];
@@ -171,17 +177,14 @@ var smilOnline = function () {
 
     };
 
-    renderEditMap = function (mapOptions) {
+    var renderEditMap = function (mapOptions) {
         var elem = document.getElementById(smilOnline.renderElemId);
         smilOnline.map = new Microsoft.Maps.Map(elem, mapOptions);
-        var wktValue = elem.previousSibling;
-        elem.setAttribute("data-wkt", wktValue.data);
-        var geom = WKTModule.Read(wktValue.data);
-        wktValue.remove();
-        //smilOnline.map.entities.push(geom);
+        var wktValue = document.getElementById(smilOnline.geomTxtfieldId).value;
+        var geom = WKTModule.Read(wktValue);
         zoomToEntity(geom);
 
-        var toolbarElement = elem.parentNode.firstElementChild;
+        var toolbarElement = document.getElementById(smilOnline.toolbarElementId);
         Microsoft.Maps.loadModule("DrawingToolsModule", {
             callback: function () {
                 //Create an instance of the drawing tools.
@@ -193,32 +196,37 @@ var smilOnline = function () {
                         styleTools: []
                     },
                     events: {
-                        drawingEnded: function (s) {
-                            //console.log("end: ", s);
+                        drawingEnded: function (feature) {
+                            updateGeomTextField(feature);
                         },
-                        drawingChanging: function (s) {
-                            //console.log("changing: ", s);
+                        drawingChanging: function (feature) {
+                            updateGeomTextField(feature);
                         },
-                        drawingChanged: function (s) {
-                            var wkt = WKTModule.Write(s);
-                            console.log(wkt);
+                        drawingChanged: function (feature) {
+                            updateGeomTextField(feature);
                         },
-                        drawingErased: function (s) {
-                            //console.log("erased: ", s);
+                        drawingErased: function () {
+                            var geoTextField = document.getElementById(smilOnline.geomTxtfieldId);
+                            geoTextField.value = "";
                         }
                     }
                 });
 
                 setDigitizerIcons();
-
                 var drawingLayer = smilOnline.map.entities.get(0);
                 drawingLayer.push(geom);
             }
         });
     };
 
+    var updateGeomTextField = function (feature) {
+        var geoTextField = document.getElementById(smilOnline.geomTxtfieldId);
+        var wkt = WKTModule.Write(feature);
+        geoTextField.value = wkt;
+    };
+
     //refactor to be able to send in module[]
-    loadModule = function (module, callback) {
+    var loadModule = function (module, callback) {
 
         if (module === "wkt") {
             Microsoft.Maps.registerModule("WKTModule", (smilOnline.getSiteUrl() + "/SmilOnlineAssets/WKTModule-min.js"));
