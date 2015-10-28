@@ -162,7 +162,7 @@ var smilOnline = function () {
 
                             break;
                         case "list":
-                            loadModule("wkt"); //, function () { });
+                            loadModule("wkt");
                             break;
                         default:
                             loadModule("wkt", function () {
@@ -283,7 +283,6 @@ var smilOnline = function () {
         geoTextField.value = wkt;
     };
 
-    //refactor to be able to send in module[]
     var loadModule = function (module, callback) {
 
         if (module === "wkt") {
