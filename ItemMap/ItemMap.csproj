@@ -71,6 +71,9 @@
     <Content Include="assets\DrawingTools.css" />
     <Content Include="assets\DrawingToolsModule.js" />
     <Content Include="assets\DrawingTools_ToolbarIcons.png" />
+    <Content Include="assets\marker.png" />
+    <Content Include="assets\polygon.png" />
+    <Content Include="assets\polyline.png" />
     <Content Include="assets\WKTModule-min.js" />
     <Content Include="packages.config" />
     <Content Include="readme.txt" />
