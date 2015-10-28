@@ -74,7 +74,7 @@ smilOnline.layerWidget = function () {
     var setItemUrl = function (featureData) {
         var spinner = "#" + featureData.elemementID;
         jQuery(spinner).removeClass("fa fa-spinner fa-spin");
-        var url = smilOnline.baseServiceUrl + "/web/lists/GetByTitle('" + featureData.listName + "')?$select=EntityTypeName&@target='" + smilOnline.hostWebUrl + "'";
+        var url = smilOnline.baseServiceUrl + "/web/lists/GetByTitle('" + featureData.listName + "')?$select=EntityTypeName,BaseTemplate&@target='" + smilOnline.hostWebUrl + "'";
 
         jQuery.ajax({
             url: url,
@@ -82,18 +82,29 @@ smilOnline.layerWidget = function () {
             context: featureData
         }).done(function (response) {
             jQuery(spinner).addClass("fa fa-external-link-square");
-            var folderName = response.d.EntityTypeName;
-            folderName = smilOnline.common.replaceInvalidChars(folderName);
-            var itemUrl = smilOnline.hostWebUrl + "/" + (folderName.replace("_x0020_", " ")) + "/Forms/DispForm.aspx?ID=" + featureData.id;
+           
+            var itemUrl = getItemUrl(response, featureData);
             jQuery(spinner).attr("data-itemUrl", itemUrl);
             jQuery(spinner).on("click", function (evt) {
                 var url = jQuery(this).attr("data-itemUrl");
                 window.open(url, "_blank");
             });
-            console.log(folderName);
         });
 
         
+    };
+
+    var getItemUrl = function (response, featureData) {
+        var itemUrl; 
+        if (response.d.BaseTemplate === 101 || response.d.BaseTemplate === 109) {
+            var folderName = response.d.EntityTypeName;
+            folderName = smilOnline.common.replaceInvalidChars(folderName);
+            itemUrl = smilOnline.hostWebUrl + "/" + (folderName.replace("_x0020_", " ")) + "/Forms/DispForm.aspx?ID=" + featureData.id;
+        }
+        else {
+            itemUrl = smilOnline.hostWebUrl + "/Lists/" + featureData.listName + "/DispForm.aspx?ID=" + featureData.id;
+        }
+        return itemUrl;
     };
 
     var formatData = function (featureData) {
