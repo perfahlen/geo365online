@@ -12,7 +12,7 @@
     right: 50px;
     z-index: 10000;
     background-color: white;
-    opacity: 0.7;
+    opacity: 0.85;
     padding: 10px;
     /*display: none;*/
 }
@@ -23,6 +23,11 @@ ul, li{
     margin: 0;
     padding-right: 10px;
     padding-left: 0px;
+}
+
+.layerWidgetHeaders{
+    font-weight: 600;
+    color: black
 }
 
 #info {
@@ -40,12 +45,13 @@ ul, li{
     left: 0;
     right: 0;
     background-color: white;
-    opacity: 0.8;
+    opacity: 0.95;
     position: absolute;
     display: none;
+    z-index: 10001;
 }
 
-#configWidget {
+.centerWidget {
     position: relative;
     background-color: lightgray;
     color: black;
@@ -53,12 +59,10 @@ ul, li{
     width: 35em;
     margin-left: auto;
     margin-right: auto;
-    border-width: 1px;
-    border-color: rgba(150, 150, 150, 0.5);
-    border-style: solid;
+    border: 1px  rgba(150, 150, 150, 0.5) solid;
 }
 
-#configWidgetForm {
+.widgetForm {
     position: relative;
     margin: 20px;
 }
@@ -73,7 +77,35 @@ ul, li{
     width: 100%;
 }
 
-#confirmConfigButton {
+.confirmButton {
     margin-right: 22px;
     float: right;
+}
+
+.cancelButton {
+    float: right;
+}
+
+.centerText{
+    text-align: center;
+}
+
+#spLayersList{
+    border-bottom: solid lightgray 1px;
+    padding-bottom: 6px;
+}
+
+#layerWidgetIcon{
+    float: right;
+}
+
+#layerAdminToolbar{
+    padding-top: 6px;
+    display: none;
+}
+    #layerAdminToolbar > i {
+        float: right;
+    }
+#workingWidget{
+    display: none;
 }

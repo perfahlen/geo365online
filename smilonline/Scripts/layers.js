@@ -5,6 +5,8 @@ var smilOnline = smilOnline || {};
 smilOnline.layers = function () {
     var siteLayers = [];
 
+    var noneGeoLists = [];
+
     /*
     Gets layers from site
     */
@@ -21,12 +23,14 @@ smilOnline.layers = function () {
                     return field.Title == "Geometry";
                 });
 
-                if (geometryFields.length > 0) {
+                if (geometryFields.length === 1) {
                     geomLists.push({
                         Title: list.Title,
                         geometryField: true,
                         geometries: []
                     });
+                } else {
+                    noneGeoLists.push(list.Title);
                 }
             });
 
@@ -84,7 +88,13 @@ smilOnline.layers = function () {
         return dfd.promise();
     };
 
+    var addFieldToList = function (listName) {
+        console.log(listName);
+    };
+
     return {
-        load: fetchFromSite
+        load: fetchFromSite,
+        noneGeoLists: noneGeoLists,
+        addFieldToList: addFieldToList
     };
 }();

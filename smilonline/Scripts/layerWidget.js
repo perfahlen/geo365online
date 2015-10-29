@@ -9,12 +9,12 @@ smilOnline.layerWidget = function () {
             var postFixId = smilOnline.common.getGuid();
             var elemId = "chkbox_" + postFixId;
             jQuery('<li><input type="checkbox" value="' + layer.Title + '" id="chkbox_' + postFixId + '" />'
-                + '<a href="#"><label for="' + elemId + '">' + layer.Title + '</a></label></li>').appendTo("#layerWidget > div > ul");
+                + '<a href="#"><label for="' + elemId + '">' + layer.Title + '</a></label></li>').appendTo("#spLayersList > ul");
 
             plotGeometries(layer);
 
         });
-        jQuery("#layerWidget > div > ul > li").on("change", function (evt) {
+        jQuery("#spLayersList > ul > li").on("change", function (evt) {
             for (var i = 0; i < smilOnline.map.entities.getLength() ; i++) {
                 var entity = smilOnline.map.entities.get(i);
                 var attributes = entity.getAttributes();
@@ -31,18 +31,71 @@ smilOnline.layerWidget = function () {
         jQuery("#layerWidgetHeadline").on("click", toggleLayerWidget);
         jQuery("#layerWidgetIcon").on("click", toggleLayerWidget);
 
+        jQuery("#layerAdminToolbar").show();
+
+        jQuery("#layerAdminToolbar > i").on("click", showNoneSmilLayers);
+
+        jQuery("#addLayerCancelButton").on("click", showMap);
+
+        jQuery("#addLayerButton").on("click", addLayer);
+
+    };
+
+    var addLayer = function(evt){
+        var layerName = jQuery("#addToListNameId").html();
+        evt.preventDefault();
+
+        jQuery("#confirmationWidget").hide();
+        jQuery("#workingWidget").show();
+
+        var listToAdd = jQuery("#addToListNameId").html();
+        smilOnline.layers.addFieldToList(listToAdd);
+    };
+    
+    var showMap = function (evt) {
+        jQuery("#confirmationWidget").hide();
+        jQuery("#cover").hide();
+        evt.preventDefault();
+    };
+
+    var showNoneSmilLayers = function () {
+        var lists = smilOnline.layers.noneGeoLists;
+        if (jQuery("#layerAdminLayerList > ul > li").length === 0) {
+            lists.forEach(function (list) {
+                jQuery('<li style="margin: 3px;"><i class="fa fa-plus"></i><span style="padding-left: 4px;">' + list + '</span></li>').appendTo("#layerAdminLayerList > ul");
+            });
+            jQuery("#layerAdminToolbar > i").removeClass("fa fa-chevron-right fa-1").addClass("fa fa-chevron-down fa-1");
+            jQuery("#layerAdminLayerList > ul > li > i").on("click", function (evt) {
+                jQuery("#cover").show();
+                jQuery("#configWidget").hide();
+                jQuery("#confirmationWidget").show();
+                var listName = $(evt.target).next().html();
+                jQuery("#addToListNameId").html(listName);
+            });
+               
+            return;
+        }
+
+        var isVisible = jQuery("#layerAdminLayerList > ul").is(":visible");
+        if (isVisible) {
+            jQuery("#layerAdminLayerList").hide();
+            jQuery("#layerAdminToolbar > i").removeClass("fa fa-chevron-down fa-1").addClass("fa fa-chevron-right fa-1");
+        } else {
+            jQuery("#layerAdminLayerList").show();
+            jQuery("#layerAdminToolbar > i").removeClass("fa fa-chevron-right fa-1").addClass("fa fa-chevron-down fa-1");
+        }
     };
 
     var toggleLayerWidget = function () {
-        var isVisible = jQuery("#layerWidget > div > ul").is(":visible");
+        var isVisible = jQuery("#spLayersList > ul").is(":visible");
         if (isVisible) {
             jQuery(layerWidgetIcon).removeClass();
             jQuery(layerWidgetIcon).addClass("fa fa-chevron-right fa-1");
-            jQuery("#layerWidget > div > ul").hide();
+            jQuery("#spLayersList > ul").hide();
         } else {
             jQuery(layerWidgetIcon).removeClass();
             jQuery(layerWidgetIcon).addClass("fa fa-chevron-down fa-1");
-            jQuery("#layerWidget > div > ul").show();
+            jQuery("#spLayersList > ul").show();
         }
     };
 
@@ -82,7 +135,7 @@ smilOnline.layerWidget = function () {
             context: featureData
         }).done(function (response) {
             jQuery(spinner).addClass("fa fa-external-link-square");
-           
+
             var itemUrl = getItemUrl(response, featureData);
             jQuery(spinner).attr("data-itemUrl", itemUrl);
             jQuery(spinner).on("click", function (evt) {
@@ -91,11 +144,11 @@ smilOnline.layerWidget = function () {
             });
         });
 
-        
+
     };
 
     var getItemUrl = function (response, featureData) {
-        var itemUrl; 
+        var itemUrl;
         if (response.d.BaseTemplate === 101 || response.d.BaseTemplate === 109) {
             var folderName = response.d.EntityTypeName;
             folderName = smilOnline.common.replaceInvalidChars(folderName);

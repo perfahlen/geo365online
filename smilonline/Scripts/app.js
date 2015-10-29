@@ -24,6 +24,8 @@ smilOnline.initMap = function () {
         var windowHeightCenter = jQuery(window).height() / 2;
         var top = Math.ceil(windowHeightCenter - configWidgetDelta);
         jQuery("#configWidget").css("top", top);
+        jQuery("#confirmationWidget").css("top", top);
+        jQuery("#workingWidget").css("top", top);
     };
 
     $(document).ready(function () {

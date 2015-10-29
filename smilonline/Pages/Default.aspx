@@ -42,10 +42,15 @@
     </div>
 
     <div id="layerWidget">
-        <div id="spLayers"><span id="layerWidgetHeadline">SharePoint Layers</span>&nbsp;<span id="layerWidgetIcon" class="fa fa-spinner fa-spin"></span></div>
-        <div>
-        <ul>
-        </ul>
+        <div id="spLayers"><span id="layerWidgetHeadline" class="layerWidgetHeaders">SharePoint Layers</span>&nbsp;<span id="layerWidgetIcon" class="fa fa-spinner fa-spin"></span></div>
+        <div id="spLayersList">
+        <ul></ul>
+        </div>
+        <div id="layerAdminToolbar" class="layerWidgetHeaders">Add layers
+            <i class="fa fa-chevron-right fa-1"></i>
+        </div>
+        <div id="layerAdminLayerList">
+            <ul></ul>
         </div>
     </div>
 
@@ -57,10 +62,26 @@
         </p>
         <input type="button" id="infoOK" value="OK" />
     </div>
-
+    
     <div id="cover">
-        <div id="configWidget">
-            <div id="configWidgetForm">
+        <div id="workingWidget" class="centerWidget">
+            <div class="widgetForm centerText">
+                working on it ...
+            </div>
+            <div class="centerText"><i class="fa fa-spin fa-spinner" style="font-size: 7em;"></i></div>
+        </div>
+        <div id="confirmationWidget" class="centerWidget">
+            <div class="widgetForm">
+                Are you sure you want to add Geometry field to list <i><span id="addToListNameId"></span></i>?
+                <p>A multiline text field will be added to the list.</p>
+            </div>
+            <div>
+                <button id="addLayerButton" class="confirmButton">OK</button>
+                <button id="addLayerCancelButton" class="cancelButton">Cancel</button>
+            </div>
+        </div>
+        <div id="configWidget" class="centerWidget">
+            <div id="configWidgetForm" class="widgetForm">
                 <span>Bing maps key: </span>
                 <input type="text" placeholder="Your bing maps key." id="configWidgetFormBingKey" />
                 <div id="configWidgetFormLocation">
@@ -79,7 +100,7 @@
                 </div>
             </div>
             <div>
-                <button id="confirmConfigButton">OK</button>
+                <button id="confirmConfigButton" class="confirmButton">OK</button>
             </div>
         </div>
     </div>
