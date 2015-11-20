@@ -15,5 +15,6 @@
     <File Path="Scripts\BingMapsExtension.js" Url="Scripts/BingMapsExtension.js" ReplaceContent="TRUE" />
     <File Path="Scripts\libs\V7CustomInfobox.min.js" Url="Scripts/libs/V7CustomInfobox.min.js" ReplaceContent="TRUE" />
     <File Path="Scripts\common.js" Url="Scripts/common.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\libs\JsLink_CSOM.js" Url="Scripts/libs/JsLink_CSOM.js" ReplaceContent="TRUE" />
   </Module>
 </Elements>

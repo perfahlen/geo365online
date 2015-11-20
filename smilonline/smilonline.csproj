@@ -78,6 +78,7 @@
     <Content Include="Scripts\libs\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\libs\jquery-1.9.1.js" />
     <Content Include="Scripts\libs\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\libs\JsLink_CSOM.js" />
     <Content Include="Scripts\libs\V7CustomInfobox.min.js" />
     <Content Include="Scripts\libs\WKTModule-min.js" />
     <Content Include="Scripts\common.js" />

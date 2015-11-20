@@ -16,5 +16,6 @@
     <ProjectItemFile Source="BingMapsExtension.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="libs\V7CustomInfobox.min.js" Target="Scripts\libs\" Type="ElementFile" />
     <ProjectItemFile Source="common.js" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="libs\JsLink_CSOM.js" Target="Scripts\libs\" Type="ElementFile" />
   </Files>
 </ProjectItem>

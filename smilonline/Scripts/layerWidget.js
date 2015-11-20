@@ -48,8 +48,15 @@ smilOnline.layerWidget = function () {
         jQuery("#confirmationWidget").hide();
         jQuery("#workingWidget").show();
 
-        var listToAdd = jQuery("#addToListNameId").html();
-        smilOnline.layers.addFieldToList(listToAdd);
+        
+        smilOnline.layers.addFieldToList(layerName).done(function () {
+            
+            smilOnline.layers.updateForms(layerName).done(function () {
+                jQuery("#workingWidget").hide();
+                jQuery("#cover").hide();
+                document.location.href = document.location.href;
+            });
+        });
     };
     
     var showMap = function (evt) {

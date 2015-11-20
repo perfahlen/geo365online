@@ -17,8 +17,10 @@
     <link rel="Stylesheet" type="text/css" href="../Content/App.css" />
     <link href="../Content/font-awesome.min.css" rel="stylesheet" />
     
+
     <!-- Add your JavaScript to the following file -->
-    <script type="text/javascript" src="../Scripts/BingMapsExtension.js"
+    <script  type="text/javascript" src="../_layouts/15/SP.RequestExecutor.js"></script>
+    <script type="text/javascript" src="../Scripts/BingMapsExtension.js"></script>
     <script type="text/javascript" src="../Scripts/libs/WKTModule-min.js"></script>
     <script type="text/javascript" src="../Scripts/libs/V7CustomInfobox.min.js"></script>
     <script type="text/javascript" src="../Scripts/app.js"></script>
@@ -28,6 +30,7 @@
     <script type="text/javascript" src="../Scripts/layerWidget.js"></script>
     <script type="text/javascript" src="../Scripts/config.js"></script>
     <script type="text/javascript" src="../Scripts/common.js"></script>
+    <script type="text/javascript" src="../Scripts/libs/JsLink_CSOM.js"></script>
 </asp:Content>
 
 <%-- The markup in the following Content element will be placed in the TitleArea of the page --%>
@@ -70,6 +73,7 @@
             </div>
             <div class="centerText"><i class="fa fa-spin fa-spinner" style="font-size: 7em;"></i></div>
         </div>
+        
         <div id="confirmationWidget" class="centerWidget">
             <div class="widgetForm">
                 Are you sure you want to add Geometry field to list <i><span id="addToListNameId"></span></i>?
@@ -104,5 +108,4 @@
             </div>
         </div>
     </div>
-
 </asp:Content>
