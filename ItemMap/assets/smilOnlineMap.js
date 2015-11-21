@@ -86,7 +86,7 @@ var smilOnline = function () {
         zoomToEntity(feature);
         smilOnline.map.entities.push(feature);
     };
-    
+
     var displayForm = function (ctx) {
         smilOnline.state = "view";
         var mapElem = createMapElement(ctx);
@@ -128,11 +128,13 @@ var smilOnline = function () {
 
     var createMapElement = function (ctx) {
         var elemID = this.guid();
+        var elem;
         var geom = ctx.CurrentFieldValue.replace('<div dir="">', "").replace("</div>", "");
         if (smilOnline.state === "edit" && geom === '') {
-            return '<span></span>';
+            elem = '<div style="height: 400px; width: 400px; position: relative;" id="' + elemID + '"></div>';
+        } else {
+            elem = '<div data-geom="' + geom + '" style="height: 400px; width: 400px; position: relative;" id="' + elemID + '"></div>';
         }
-        var elem = '<div data-geom="' + geom + '" style="height: 400px; width: 400px; position: relative;" id="' + elemID + '"></div>';
         smilOnline.renderElemId = elemID;
         return elem;
     };
@@ -180,15 +182,20 @@ var smilOnline = function () {
         var elem = document.getElementById(smilOnline.renderElemId);
         smilOnline.map = new Microsoft.Maps.Map(elem, smilOnline.mapOptions);
         var wktValue = elem.getAttribute("data-geom");
-        var geom = WKTModule.Read(wktValue);
-        smilOnline.map.entities.push(geom);
-        zoomToEntity(geom);
+        if (wktValue === "") {
+            elem.style.display = "none";
+
+        } else {
+            var geom = WKTModule.Read(wktValue);
+            smilOnline.map.entities.push(geom);
+            zoomToEntity(geom);
+        }
     };
 
     var zoomToEntity = function (entity) {
         var locations = getLocations(entity);
         if (locations.length === 1) {
-            smilOnline.map.setView({center: locations[0], zoom: 13});
+            smilOnline.map.setView({ center: locations[0], zoom: 13 });
         }
         else if (locations.length > 1) {
             var locationRect = Microsoft.Maps.LocationRect.fromLocations(locations);
