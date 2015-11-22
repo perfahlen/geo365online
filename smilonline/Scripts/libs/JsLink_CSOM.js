@@ -4,6 +4,7 @@
         if (!dfd) {
             dfd = jQuery.Deferred();
         }
+
         var ctx = new SP.ClientContext(smilOnline.appWebUrl);
         var factory = new SP.ProxyWebRequestExecutorFactory(smilOnline.appWebUrl);
         ctx.set_webRequestExecutorFactory(factory);
@@ -25,14 +26,12 @@
             function () {
                 console.log("Could not add JSLInk to view " + pagePath);
             });
-
         },
         function () {
             console.log("Could not add JSLInk to view.");
+            dfd.resolve();
         });
-
         return dfd;
     };
-
     return cTor;
 })();
