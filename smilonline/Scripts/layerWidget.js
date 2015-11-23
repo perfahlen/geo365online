@@ -69,7 +69,7 @@ smilOnline.layerWidget = function () {
         var lists = smilOnline.layers.noneGeoLists;
         if (jQuery("#layerAdminLayerList > ul > li").length === 0) {
             lists.forEach(function (list) {
-                jQuery('<li style="margin: 3px;"><i class="fa fa-plus"></i><span style="padding-left: 4px;">' + list + '</span></li>').appendTo("#layerAdminLayerList > ul");
+                jQuery('<li style="margin: 3px;" title="Press + to geo-enable list"><i class="fa fa-plus"></i><span style="padding-left: 4px;">' + list + '</span></li>').appendTo("#layerAdminLayerList > ul");
             });
             jQuery("#layerAdminToolbar > i").removeClass("fa fa-chevron-right fa-1").addClass("fa fa-chevron-down fa-1");
             jQuery("#layerAdminLayerList > ul > li > i").on("click", function (evt) {

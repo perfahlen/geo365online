@@ -56,6 +56,9 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Elements.xml" />
     <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="Images\geo365.png">
+      <OpcRelationship>manifest-icon</OpcRelationship>
+    </Content>
     <Content Include="Pages\Elements.xml" />
     <Content Include="Pages\Default.aspx" />
     <None Include="SharePointProjectItem.spdata">
@@ -92,9 +95,7 @@
     <Content Include="Content\App.css" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\AppIcon.png">
-      <OpcRelationship>manifest-icon</OpcRelationship>
-    </Content>
+    <Content Include="Images\AppIcon.png" />
     <Content Include="Images\Elements.xml" />
     <None Include="Images\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{49855222-2c79-4e27-8fb5-cce7298a4ef9}</SharePointProjectItemId>

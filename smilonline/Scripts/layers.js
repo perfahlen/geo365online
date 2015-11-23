@@ -36,10 +36,14 @@ smilOnline.layers = function () {
 
             siteLayers = geomLists.slice();
 
-            var geoms = getGeometries(geomLists);
-            geoms.done(function () {
+            if (geomLists.length > 0) {
+                var geoms = getGeometries(geomLists);
+                geoms.done(function () {
+                    smilOnline.layerWidget.initLayerWidget(siteLayers);
+                });
+            } else {
                 smilOnline.layerWidget.initLayerWidget(siteLayers);
-            });
+            }
         });
     };
 
@@ -216,7 +220,7 @@ smilOnline.layers = function () {
                 "Accept": "application/json; odata=verbose"
             },
             success: function (response) {
-                processForms(listName, response.d.results).done(function(){
+                processForms(listName, response.d.results).done(function () {
                     dfd.resolve();
                 });
             },
@@ -246,21 +250,32 @@ smilOnline.layers = function () {
     var setFormJSLink = function (listName, form) {
         var dfd = jQuery.Deferred();
 
-        var url = smilOnline.baseServiceUrl + "/web/GetFileByServerRelativeUrl('" + form.ServerRelativeUrl + "')/GetLimitedWebPartManager(scope=1)/WebParts?$expand=WebPart&@target='" + smilOnline.hostWebUrl + "'";
+        var validForms = ["EditForm.aspx", "DispForm.aspx", "NewForm.aspx"];
+        var isValidForm = validForms.filter(function (validForm) {
+            var idx = form.ServerRelativeUrl.indexOf(validForm);
+            return idx > -1;
+        }).length > 0;
 
-        jQuery.ajax({
-            url: url,
-            contentType: "application/json;odata=verbose",
-            headers: {
-                "Accept": "application/json; odata=verbose"
-            },
-            success: function (response) {
-                var forDfd = new JSLink_CSOM(response.d.results[0].Id, form.ServerRelativeUrl, dfd);
-                forDfd.done(function () {
-                    dfd.resolve(response);
-                });
-            }
-        });
+        if (!isValidForm) {
+            dfd.resolve();
+        }
+        else {
+            var url = smilOnline.baseServiceUrl + "/web/GetFileByServerRelativeUrl('" + form.ServerRelativeUrl + "')/GetLimitedWebPartManager(scope=1)/WebParts?$expand=WebPart&@target='" + smilOnline.hostWebUrl + "'";
+
+            jQuery.ajax({
+                url: url,
+                contentType: "application/json;odata=verbose",
+                headers: {
+                    "Accept": "application/json; odata=verbose"
+                },
+                success: function (response) {
+                    var forDfd = new JSLink_CSOM(response.d.results[0].Id, form.ServerRelativeUrl, dfd);
+                    forDfd.done(function () {
+                        dfd.resolve(response);
+                    });
+                }
+            });
+        }
         return dfd.promise();
     };
 
