@@ -14,7 +14,7 @@
     background-color: white;
     opacity: 0.85;
     padding: 10px;
-    /*display: none;*/
+    min-width: 180px;
 }
 
 ul, li{
