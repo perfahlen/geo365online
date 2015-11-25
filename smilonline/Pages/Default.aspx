@@ -21,7 +21,7 @@
     <!-- Add your JavaScript to the following file -->
     <script  type="text/javascript" src="../_layouts/15/SP.RequestExecutor.js"></script>
     <script type="text/javascript" src="../Scripts/BingMapsExtension.js"></script>
-    <script type="text/javascript" src="../Scripts/libs/WKTModule-min.js"></script>
+    <%--<script type="text/javascript" src="../Scripts/WKTModule-min.js"></script>--%>
     <script type="text/javascript" src="../Scripts/libs/V7CustomInfobox.min.js"></script>
     <script type="text/javascript" src="../Scripts/app.js"></script>
     <script type="text/javascript" src="../Scripts/ensureConfiguration.js"></script>
@@ -31,6 +31,7 @@
     <script type="text/javascript" src="../Scripts/config.js"></script>
     <script type="text/javascript" src="../Scripts/common.js"></script>
     <script type="text/javascript" src="../Scripts/libs/JsLink_CSOM.js"></script>
+    <script type="text/javascript" src="../Scripts/deployToSP.js"></script>
 </asp:Content>
 
 <%-- The markup in the following Content element will be placed in the TitleArea of the page --%>

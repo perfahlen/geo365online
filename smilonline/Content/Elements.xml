@@ -4,5 +4,6 @@
     <File Path="Content\App.css" Url="Content/App.css" ReplaceContent="TRUE" />
     <File Path="Content\font-awesome.min.css" Url="Content/font-awesome.min.css" ReplaceContent="TRUE" />
     <File Path="Content\font-awesome.css" Url="Content/font-awesome.css" ReplaceContent="TRUE" />
+    <File Path="Content\DrawingTools.css" Url="Content/DrawingTools.css" ReplaceContent="TRUE" />
   </Module>
 </Elements>

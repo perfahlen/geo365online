@@ -3,5 +3,9 @@
   <Module Name="Images">
     <File Path="Images\AppIcon.png" Url="Images/AppIcon.png" ReplaceContent="TRUE" />
     <File Path="Images\geo365.png" Url="Images/geo365.png" ReplaceContent="TRUE" />
+    <File Path="Images\DrawingTools_ToolbarIcons.png" Url="Images/DrawingTools_ToolbarIcons.png" ReplaceContent="TRUE" />
+    <File Path="Images\marker.png" Url="Images/marker.png" ReplaceContent="TRUE" />
+    <File Path="Images\polygon.png" Url="Images/polygon.png" ReplaceContent="TRUE" />
+    <File Path="Images\polyline.png" Url="Images/polyline.png" ReplaceContent="TRUE" />
   </Module>
 </Elements>

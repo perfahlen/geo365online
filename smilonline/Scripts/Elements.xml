@@ -16,5 +16,8 @@
     <File Path="Scripts\libs\V7CustomInfobox.min.js" Url="Scripts/libs/V7CustomInfobox.min.js" ReplaceContent="TRUE" />
     <File Path="Scripts\common.js" Url="Scripts/common.js" ReplaceContent="TRUE" />
     <File Path="Scripts\libs\JsLink_CSOM.js" Url="Scripts/libs/JsLink_CSOM.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\deployToSP.js" Url="Scripts/deployToSP.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\smilOnlineMap.js" Url="Scripts/smilOnlineMap.js" ReplaceContent="TRUE" />
+    <File Path="Scripts\libs\DrawingToolsModule.js" Url="Scripts/libs/DrawingToolsModule.js" ReplaceContent="TRUE" />
   </Module>
 </Elements>

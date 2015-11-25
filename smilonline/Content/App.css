@@ -8,13 +8,14 @@
 
 #layerWidget {
     position: absolute;
-    top: 50px;
-    right: 50px;
+    top: 20px;
+    right: 20px;
     z-index: 10000;
     background-color: white;
     opacity: 0.85;
     padding: 10px;
     min-width: 180px;
+    border: solid rgba(200, 200, 200, 0.8) 1px;
 }
 
 ul, li{

@@ -4,5 +4,9 @@
     <ProjectItemFile Source="Elements.xml" Target="Images\" Type="ElementManifest" />
     <ProjectItemFile Source="AppIcon.png" Target="Images\" Type="ElementFile" />
     <ProjectItemFile Source="geo365.png" Target="Images\" Type="ElementFile" />
+    <ProjectItemFile Source="DrawingTools_ToolbarIcons.png" Target="Images\" Type="ElementFile" />
+    <ProjectItemFile Source="marker.png" Target="Images\" Type="ElementFile" />
+    <ProjectItemFile Source="polygon.png" Target="Images\" Type="ElementFile" />
+    <ProjectItemFile Source="polyline.png" Target="Images\" Type="ElementFile" />
   </Files>
 </ProjectItem>
