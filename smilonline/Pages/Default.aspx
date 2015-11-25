@@ -21,7 +21,6 @@
     <!-- Add your JavaScript to the following file -->
     <script  type="text/javascript" src="../_layouts/15/SP.RequestExecutor.js"></script>
     <script type="text/javascript" src="../Scripts/BingMapsExtension.js"></script>
-    <%--<script type="text/javascript" src="../Scripts/WKTModule-min.js"></script>--%>
     <script type="text/javascript" src="../Scripts/libs/V7CustomInfobox.min.js"></script>
     <script type="text/javascript" src="../Scripts/app.js"></script>
     <script type="text/javascript" src="../Scripts/ensureConfiguration.js"></script>

@@ -209,6 +209,8 @@ var smilOnline = function () {
         if (entity instanceof Microsoft.Maps.Pushpin) {
             var location = entity.getLocation();
             locations.push(location);
+        } else {
+            locations = entity.getLocations();
         }
         return locations;
     };

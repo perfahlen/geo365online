@@ -110,10 +110,16 @@ smilOnline.ensureConfiguration = function (tryAttempt) {
         var ensuredConfigFolder = ensureConfigFolder();
 
         ensuredConfigFolder.done(function () {
-            var configFile = createConfigFile();
-            configFile.done(function () {
-                attempt += 1;
-                smilOnline.ensureConfiguration(attempt);
+            var deployToSP = new smilOnline.deployToSP();
+            var deployDfd = deployToSP.deploy();
+            deployDfd.done(function () {
+                var configFile = createConfigFile();
+                configFile.done(function () {
+                    var deployToSP = new smilOnline.deployToSP();
+                    var deployDfd = deployToSP.deploy();
+                    attempt += 1;
+                    smilOnline.ensureConfiguration(attempt);
+                });
             });
         });
 

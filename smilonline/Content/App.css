@@ -110,3 +110,7 @@ ul, li{
 #workingWidget{
     display: none;
 }
+
+#confirmationWidget{
+    display: none;
+}
