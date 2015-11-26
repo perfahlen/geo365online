@@ -64,14 +64,16 @@ var smilOnline = function () {
     };
 
     var displayListMap = function (elem) {
-        var top = elem.offsetTop;
-        var left = elem.offsetLeft;
-        var mapContainer = document.createElement("div");
-        var attributeValue = "border: solid 1px lightGray; position: fixed; height: 300px; width: 300px; z-index: 10000; background-color: red; left:" + left + "px; top: " + top + "px;";
-        mapContainer.setAttribute("style", attributeValue);
-        mapContainer.setAttribute("onmouseleave", "document.body.removeChild(this);");
-        document.body.appendChild(mapContainer);
-        renderPreviewMap(elem, mapContainer);
+        if (WKTModule) {
+            var top = elem.offsetTop;
+            var left = elem.offsetLeft;
+            var mapContainer = document.createElement("div");
+            var attributeValue = "border: solid 1px lightGray; position: fixed; height: 300px; width: 300px; z-index: 10000; background-color: red; left:" + left + "px; top: " + top + "px;";
+            mapContainer.setAttribute("style", attributeValue);
+            mapContainer.setAttribute("onmouseleave", "document.body.removeChild(this);");
+            document.body.appendChild(mapContainer);
+            renderPreviewMap(elem, mapContainer);
+        }
     };
 
     var renderPreviewMap = function (sourceElem, renderElem) {
@@ -210,7 +212,7 @@ var smilOnline = function () {
             var location = entity.getLocation();
             locations.push(location);
         } else {
-            locations = entity.getLocations();
+            locations = locations = entity === null ? [] : entity.getLocations();
         }
         return locations;
     };
@@ -364,7 +366,7 @@ var smilOnline = function () {
 document.onreadystatechange = function () {
     var state = document.readyState;
     if (state == 'complete') {
-        var scriptsToAdd = ["http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0",
+        var scriptsToAdd = ["//ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0&s=1",
                            (smilOnline.getSiteUrl() + "/SmilOnlineAssets/config.js"),
                            (smilOnline.getSiteUrl() + "/SmilOnlineAssets/configParser.js")];
 

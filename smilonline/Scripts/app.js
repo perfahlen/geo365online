@@ -15,7 +15,9 @@ smilOnline.getQueryStringParameter = function (param) {
 smilOnline.appWebUrl = decodeURIComponent(smilOnline.getQueryStringParameter("SPAppWebUrl"));
 smilOnline.hostWebUrl = decodeURIComponent(smilOnline.getQueryStringParameter("SPHostUrl"));
 smilOnline.baseServiceUrl = smilOnline.appWebUrl + "/_api/SP.AppContextSite(@target)";
-smilOnline.serverRelativeUrl = smilOnline.hostWebUrl.substring(smilOnline.hostWebUrl.indexOf('/sites'));
+smilOnline.serverRelativeUrl = "";
+
+//smilOnline.serverRelativeUrl = smilOnline.hostWebUrl.substring(smilOnline.hostWebUrl.indexOf('/sites'));
 
 smilOnline.initMap = function () {
 
@@ -29,6 +31,7 @@ smilOnline.initMap = function () {
     };
 
     $(document).ready(function () {
+
         windowResize();
         var requestDigest = jQuery("#__REQUESTDIGEST").val();
         jQuery.ajaxSetup({
@@ -38,23 +41,32 @@ smilOnline.initMap = function () {
             }
         });
 
-        var configuration = smilOnline.ensureConfiguration(1);
-        configuration.done(function (config) {
-            var mapOptions = smilOnline.configParser.getMapOptions(config);
-            var mapContainer = jQuery("#map")[0];
-            smilOnline.map = new Microsoft.Maps.Map(mapContainer, mapOptions);
-            Microsoft.Maps.registerModule("WKTModule", "../Scripts/libs/WKTModule-min.js");
-            Microsoft.Maps.loadModule("WKTModule");
+        jQuery.ajax({
+            url: smilOnline.baseServiceUrl + "/web/serverRelativeUrl?@target='" + smilOnline.hostWebUrl + "'",
+            headers: {
+                "Accept": "application/json; odata=verbose"
+            }
+        }).done(function (response) {
+            smilOnline.serverRelativeUrl = response.d.ServerRelativeUrl;
 
-            Microsoft.Maps.registerModule("CustomInfoboxModule", "../Scripts/libs/V7CustomInfobox.min.js");
-            Microsoft.Maps.loadModule("CustomInfoboxModule", {
-                callback: function () {
-                    smilOnline.customInfobox = new CustomInfobox(smilOnline.map);
-                }
+            var configuration = smilOnline.ensureConfiguration(1);
+            configuration.done(function (config) {
+                var mapOptions = smilOnline.configParser.getMapOptions(config);
+                var mapContainer = jQuery("#map")[0];
+                smilOnline.map = new Microsoft.Maps.Map(mapContainer, mapOptions);
+                Microsoft.Maps.registerModule("WKTModule", "../Scripts/libs/WKTModule-min.js");
+                Microsoft.Maps.loadModule("WKTModule");
+
+                Microsoft.Maps.registerModule("CustomInfoboxModule", "../Scripts/libs/V7CustomInfobox.min.js");
+                Microsoft.Maps.loadModule("CustomInfoboxModule", {
+                    callback: function () {
+                        smilOnline.customInfobox = new CustomInfobox(smilOnline.map);
+                    }
+                });
+
+                smilOnline.layers.load();
+
             });
-
-            smilOnline.layers.load();
-
         });
 
         jQuery(window).resize(windowResize);
