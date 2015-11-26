@@ -1,12 +1,12 @@
 ﻿'use strict';
 
-var smilOnline = smilOnline || {};
+var geo365 = geo365 || {};
 
-smilOnline.configParser = function () {
+geo365.configParser = function () {
 
     var parseMapOptions = function (config) {
         var center = getCenter(config);
-        var bingConfig = new smilOnline.config();
+        var bingConfig = new geo365.config();
         bingConfig.setCenter(center);
         bingConfig.setZoom(config.zoom);
         bingConfig.setBingKey(config.credentials);

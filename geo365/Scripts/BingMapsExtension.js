@@ -1,8 +1,8 @@
 ﻿'use strict';
 
-var smilOnline = smilOnline || {};
+var geo365 = geo365 || {};
 
-smilOnline.extendBingMaps = function () {
+geo365.extendBingMaps = function () {
     Microsoft.Maps.Pushpin.prototype.setAttributes = function () {
         this.attributes = arguments[0];
     };

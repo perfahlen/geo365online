@@ -1,10 +1,10 @@
 ﻿'use strict';
 
-var smilOnline = smilOnline || {};
+var geo365 = geo365 || {};
 
-smilOnline.ensureConfiguration = function (tryAttempt) {
+geo365.ensureConfiguration = function (tryAttempt) {
     var configDfd = jQuery.Deferred();
-    var url = smilOnline.baseServiceUrl + "/web/getfilebyserverrelativeurl('" + smilOnline.serverRelativeUrl + "/SmilOnlineAssets/smilOnline.jsn')/$value?@target='" + smilOnline.hostWebUrl + "'";
+    var url = geo365.baseServiceUrl + "/web/getfilebyserverrelativeurl('" + geo365.serverRelativeUrl + "/geo365Assets/geo365.jsn')/$value?@target='" + geo365.hostWebUrl + "'";
     jQuery.ajax({
         url: url,
         dataType: "json"
@@ -34,7 +34,7 @@ smilOnline.ensureConfiguration = function (tryAttempt) {
     };
 
     var folderExists = function () {
-        var url = smilOnline.baseServiceUrl + "/web/GetFolderByServerRelativeUrl('" + smilOnline.serverRelativeUrl + "/SmilOnlineAssets')?@target='" + smilOnline.hostWebUrl + "'";
+        var url = geo365.baseServiceUrl + "/web/GetFolderByServerRelativeUrl('" + geo365.serverRelativeUrl + "/geo365Assets')?@target='" + geo365.hostWebUrl + "'";
         var dfd = jQuery.Deferred();
         jQuery.ajax({
             url: url,
@@ -49,13 +49,13 @@ smilOnline.ensureConfiguration = function (tryAttempt) {
 
     var createFolder = function () {
         var dfd = jQuery.Deferred();
-        var url = smilOnline.baseServiceUrl + "/web/lists?@target='" + smilOnline.hostWebUrl + "'";
+        var url = geo365.baseServiceUrl + "/web/lists?@target='" + geo365.hostWebUrl + "'";
 
         var postObj = {
             __metadata: { type: 'SP.List' },
             BaseTemplate: 101,
-            Description: 'List for smilonline assets',
-            Title: 'SmilOnlineAssets'
+            Description: 'List for geo365 assets',
+            Title: 'geo365Assets'
         };
 
         var dataToSend = JSON.stringify(postObj);
@@ -84,9 +84,9 @@ smilOnline.ensureConfiguration = function (tryAttempt) {
         });
 
         jQuery("#confirmConfigButton").on("click", function () {
-            var config = new smilOnline.config();
+            var config = new geo365.config();
             var currentConfig = config.getFormConfiguration();
-            var url = smilOnline.baseServiceUrl + "/web/getfolderbyserverrelativeurl('" + smilOnline.serverRelativeUrl + "/SmilOnlineAssets')/files/add(overwrite=true,url='smilOnline.jsn')?@target='" + smilOnline.hostWebUrl + "'";
+            var url = geo365.baseServiceUrl + "/web/getfolderbyserverrelativeurl('" + geo365.serverRelativeUrl + "/geo365Assets')/files/add(overwrite=true,url='geo365.jsn')?@target='" + geo365.hostWebUrl + "'";
 
             var data = JSON.stringify(currentConfig);
 
@@ -110,15 +110,15 @@ smilOnline.ensureConfiguration = function (tryAttempt) {
         var ensuredConfigFolder = ensureConfigFolder();
 
         ensuredConfigFolder.done(function () {
-            var deployToSP = new smilOnline.deployToSP();
+            var deployToSP = new geo365.deployToSP();
             var deployDfd = deployToSP.deploy();
             deployDfd.done(function () {
                 var configFile = createConfigFile();
                 configFile.done(function () {
-                    var deployToSP = new smilOnline.deployToSP();
+                    var deployToSP = new geo365.deployToSP();
                     var deployDfd = deployToSP.deploy();
                     attempt += 1;
-                    smilOnline.ensureConfiguration(attempt);
+                    geo365.ensureConfiguration(attempt);
                 });
             });
         });

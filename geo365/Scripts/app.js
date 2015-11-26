@@ -1,8 +1,8 @@
 ﻿'use strict';
 
-var smilOnline = smilOnline || {};
+var geo365 = geo365 || {};
 
-smilOnline.getQueryStringParameter = function (param) {
+geo365.getQueryStringParameter = function (param) {
     var params = document.URL.split("?")[1].split("&");
 
     for (var i = 0; i < params.length; i++) {
@@ -12,14 +12,14 @@ smilOnline.getQueryStringParameter = function (param) {
     }
 };
 
-smilOnline.appWebUrl = decodeURIComponent(smilOnline.getQueryStringParameter("SPAppWebUrl"));
-smilOnline.hostWebUrl = decodeURIComponent(smilOnline.getQueryStringParameter("SPHostUrl"));
-smilOnline.baseServiceUrl = smilOnline.appWebUrl + "/_api/SP.AppContextSite(@target)";
-smilOnline.serverRelativeUrl = "";
+geo365.appWebUrl = decodeURIComponent(geo365.getQueryStringParameter("SPAppWebUrl"));
+geo365.hostWebUrl = decodeURIComponent(geo365.getQueryStringParameter("SPHostUrl"));
+geo365.baseServiceUrl = geo365.appWebUrl + "/_api/SP.AppContextSite(@target)";
+geo365.serverRelativeUrl = "";
 
-//smilOnline.serverRelativeUrl = smilOnline.hostWebUrl.substring(smilOnline.hostWebUrl.indexOf('/sites'));
+//geo365.serverRelativeUrl = geo365.hostWebUrl.substring(geo365.hostWebUrl.indexOf('/sites'));
 
-smilOnline.initMap = function () {
+geo365.initMap = function () {
 
     var windowResize = function () {
         var configWidgetDelta = jQuery("#configWidget").height();
@@ -42,29 +42,29 @@ smilOnline.initMap = function () {
         });
 
         jQuery.ajax({
-            url: smilOnline.baseServiceUrl + "/web/serverRelativeUrl?@target='" + smilOnline.hostWebUrl + "'",
+            url: geo365.baseServiceUrl + "/web/serverRelativeUrl?@target='" + geo365.hostWebUrl + "'",
             headers: {
                 "Accept": "application/json; odata=verbose"
             }
         }).done(function (response) {
-            smilOnline.serverRelativeUrl = response.d.ServerRelativeUrl;
+            geo365.serverRelativeUrl = response.d.ServerRelativeUrl;
 
-            var configuration = smilOnline.ensureConfiguration(1);
+            var configuration = geo365.ensureConfiguration(1);
             configuration.done(function (config) {
-                var mapOptions = smilOnline.configParser.getMapOptions(config);
+                var mapOptions = geo365.configParser.getMapOptions(config);
                 var mapContainer = jQuery("#map")[0];
-                smilOnline.map = new Microsoft.Maps.Map(mapContainer, mapOptions);
+                geo365.map = new Microsoft.Maps.Map(mapContainer, mapOptions);
                 Microsoft.Maps.registerModule("WKTModule", "../Scripts/libs/WKTModule-min.js");
                 Microsoft.Maps.loadModule("WKTModule");
 
                 Microsoft.Maps.registerModule("CustomInfoboxModule", "../Scripts/libs/V7CustomInfobox.min.js");
                 Microsoft.Maps.loadModule("CustomInfoboxModule", {
                     callback: function () {
-                        smilOnline.customInfobox = new CustomInfobox(smilOnline.map);
+                        geo365.customInfobox = new CustomInfobox(geo365.map);
                     }
                 });
 
-                smilOnline.layers.load();
+                geo365.layers.load();
 
             });
         });

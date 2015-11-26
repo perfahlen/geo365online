@@ -1,9 +1,9 @@
 ﻿'use strict';
 
-var smilOnline = smilOnline || {};
+var geo365 = geo365 || {};
 
 
-smilOnline.common = function () {
+geo365.common = function () {
     var replaceInvalidChars = function (word) {
         var invalids = [{ invalid: "_x0020_", replacement:  " " }];
         

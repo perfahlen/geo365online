@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "smilonline", "smilonline\smilonline.csproj", "{89CEAE8A-DA7C-4DF9-9E1A-BBBF19058A2A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "geo365", "geo365\geo365.csproj", "{89CEAE8A-DA7C-4DF9-9E1A-BBBF19058A2A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemMap", "ItemMap\ItemMap.csproj", "{C76FAE34-99B4-4274-A134-F53BC1ABA393}"
 EndProject

@@ -1,12 +1,12 @@
 ﻿'use strict';
 
-var smilOnline = smilOnline || {};
+var geo365 = geo365 || {};
 
-smilOnline.layerWidget = function () {
+geo365.layerWidget = function () {
 
     var initLayerWidget = function (layers) {
         layers.forEach(function (layer) {
-            var postFixId = smilOnline.common.getGuid();
+            var postFixId = geo365.common.getGuid();
             var elemId = "chkbox_" + postFixId;
             jQuery('<li><input type="checkbox" value="' + layer.Title + '" id="chkbox_' + postFixId + '" />'
                 + '<a href="#"><label for="' + elemId + '">' + layer.Title + '</a></label></li>').appendTo("#spLayersList > ul");
@@ -15,14 +15,14 @@ smilOnline.layerWidget = function () {
 
         });
         jQuery("#spLayersList > ul > li").on("change", function (evt) {
-            for (var i = 0; i < smilOnline.map.entities.getLength() ; i++) {
-                var entity = smilOnline.map.entities.get(i);
+            for (var i = 0; i < geo365.map.entities.getLength() ; i++) {
+                var entity = geo365.map.entities.get(i);
                 var attributes = entity.getAttributes();
                 var layerName = attributes.layerName || "";
                 if (layerName === evt.target.value) {
                     entity.setOptions({ visible: evt.target.checked });
                 }
-                smilOnline.customInfobox.hide();
+                geo365.customInfobox.hide();
             }
         });
         jQuery("#layerWidgetIcon").removeClass();
@@ -49,9 +49,9 @@ smilOnline.layerWidget = function () {
         jQuery("#workingWidget").show();
 
         
-        smilOnline.layers.addFieldToList(layerName).done(function () {
+        geo365.layers.addFieldToList(layerName).done(function () {
             
-            smilOnline.layers.updateForms(layerName).done(function () {
+            geo365.layers.updateForms(layerName).done(function () {
                 jQuery("#workingWidget").hide();
                 jQuery("#cover").hide();
                 document.location.href = document.location.href;
@@ -66,7 +66,7 @@ smilOnline.layerWidget = function () {
     };
 
     var showNoneSmilLayers = function () {
-        var lists = smilOnline.layers.noneGeoLists;
+        var lists = geo365.layers.noneGeoLists;
         if (jQuery("#layerAdminLayerList > ul > li").length === 0) {
             lists.forEach(function (list) {
                 jQuery('<li style="margin: 3px;" title="Press + to geo-enable list"><i class="fa fa-plus"></i><span style="padding-left: 4px;">' + list + '</span></li>').appendTo("#layerAdminLayerList > ul");
@@ -118,23 +118,23 @@ smilOnline.layerWidget = function () {
                 GUID: feature.attributes.GUID,
                 id: feature.attributes.id
             });
-            smilOnline.map.entities.push(geom);
+            geo365.map.entities.push(geom);
             Microsoft.Maps.Events.addHandler(geom, 'mouseup', displayInfo);
         });
     };
 
     var displayInfo = function (evt) {
-        var infoBoxPosition = smilOnline.map.getTargetCenter();
+        var infoBoxPosition = geo365.map.getTargetCenter();
         var attributes = evt.target.getAttributes();
         var featureData = formatData(attributes);
-        smilOnline.customInfobox.show(infoBoxPosition, featureData.segment);
+        geo365.customInfobox.show(infoBoxPosition, featureData.segment);
         setItemUrl(featureData, attributes.id);
     };
 
     var setItemUrl = function (featureData) {
         var spinner = "#" + featureData.elemementID;
         jQuery(spinner).removeClass("fa fa-spinner fa-spin");
-        var url = smilOnline.baseServiceUrl + "/web/lists/GetByTitle('" + featureData.listName + "')?$select=EntityTypeName,BaseTemplate&@target='" + smilOnline.hostWebUrl + "'";
+        var url = geo365.baseServiceUrl + "/web/lists/GetByTitle('" + featureData.listName + "')?$select=EntityTypeName,BaseTemplate&@target='" + geo365.hostWebUrl + "'";
 
         jQuery.ajax({
             url: url,
@@ -158,11 +158,11 @@ smilOnline.layerWidget = function () {
         var itemUrl;
         if (response.d.BaseTemplate === 101 || response.d.BaseTemplate === 109) {
             var folderName = response.d.EntityTypeName;
-            folderName = smilOnline.common.replaceInvalidChars(folderName);
-            itemUrl = smilOnline.hostWebUrl + "/" + (folderName.replace("_x0020_", " ")) + "/Forms/DispForm.aspx?ID=" + featureData.id;
+            folderName = geo365.common.replaceInvalidChars(folderName);
+            itemUrl = geo365.hostWebUrl + "/" + (folderName.replace("_x0020_", " ")) + "/Forms/DispForm.aspx?ID=" + featureData.id;
         }
         else {
-            itemUrl = smilOnline.hostWebUrl + "/Lists/" + featureData.listName + "/DispForm.aspx?ID=" + featureData.id;
+            itemUrl = geo365.hostWebUrl + "/Lists/" + featureData.listName + "/DispForm.aspx?ID=" + featureData.id;
         }
         return itemUrl;
     };

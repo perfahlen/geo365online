@@ -1,8 +1,8 @@
 ﻿'use strict';
 
-var smilOnline = smilOnline || {};
+var geo365 = geo365 || {};
 
-smilOnline.layers = function () {
+geo365.layers = function () {
     var siteLayers = [];
 
     var noneGeoLists = [];
@@ -12,7 +12,7 @@ smilOnline.layers = function () {
     */
     var fetchFromSite = function () {
         //var dfd = jQuery.Deferred();
-        var url = smilOnline.baseServiceUrl + "/web/lists?$expand=Fields&@target='" + smilOnline.hostWebUrl + "'";
+        var url = geo365.baseServiceUrl + "/web/lists?$expand=Fields&@target='" + geo365.hostWebUrl + "'";
         jQuery.ajax({
             url: url,
             dataType: 'json'
@@ -39,10 +39,10 @@ smilOnline.layers = function () {
             if (geomLists.length > 0) {
                 var geoms = getGeometries(geomLists);
                 geoms.done(function () {
-                    smilOnline.layerWidget.initLayerWidget(siteLayers);
+                    geo365.layerWidget.initLayerWidget(siteLayers);
                 });
             } else {
-                smilOnline.layerWidget.initLayerWidget(siteLayers);
+                geo365.layerWidget.initLayerWidget(siteLayers);
             }
         });
     };
@@ -56,7 +56,7 @@ smilOnline.layers = function () {
         }
 
         var currentLayer = layers.pop();
-        var url = smilOnline.baseServiceUrl + "/web/lists/GetByTitle('" + currentLayer.Title + "')/items?@target='" + smilOnline.hostWebUrl + "'";
+        var url = geo365.baseServiceUrl + "/web/lists/GetByTitle('" + currentLayer.Title + "')/items?@target='" + geo365.hostWebUrl + "'";
         jQuery.ajax({
             url: url,
             dataType: 'json',
@@ -96,7 +96,7 @@ smilOnline.layers = function () {
     var addFieldToList = function (listName) {
         var dfd = jQuery.Deferred();
 
-        var url = smilOnline.baseServiceUrl + "/web/lists/GetByTitle('" + listName + "')/fields?@target='" + smilOnline.hostWebUrl + "'";
+        var url = geo365.baseServiceUrl + "/web/lists/GetByTitle('" + listName + "')/fields?@target='" + geo365.hostWebUrl + "'";
         var data = { __metadata: { type: "SP.Field" }, Title: "Geometry", FieldTypeKind: 3 };
         var requestDigest = jQuery("#__REQUESTDIGEST").val();
         jQuery.ajax({
@@ -127,7 +127,7 @@ smilOnline.layers = function () {
     var getDefautView = function (listName) {
         var dfd = jQuery.Deferred();
 
-        var url = smilOnline.baseServiceUrl + "/web/lists/GetByTitle('" + listName + "')/views?@target='" + smilOnline.hostWebUrl + "'";
+        var url = geo365.baseServiceUrl + "/web/lists/GetByTitle('" + listName + "')/views?@target='" + geo365.hostWebUrl + "'";
         var requestDigest = jQuery("#__REQUESTDIGEST").val();
         jQuery.ajax({
             url: url,
@@ -150,7 +150,7 @@ smilOnline.layers = function () {
 
     var updateDefaultView = function (listName, viewName) {
         var dfd = jQuery.Deferred();
-        var url = smilOnline.baseServiceUrl + "/web/lists/GetByTitle('" + listName + "')/views/getbytitle('" + viewName + "')/ViewFields/AddViewField('Geometry')?@target='" + smilOnline.hostWebUrl + "'";
+        var url = geo365.baseServiceUrl + "/web/lists/GetByTitle('" + listName + "')/views/getbytitle('" + viewName + "')/ViewFields/AddViewField('Geometry')?@target='" + geo365.hostWebUrl + "'";
         var requestDigest = jQuery("#__REQUESTDIGEST").val();
         jQuery.ajax({
             url: url,
@@ -177,10 +177,10 @@ smilOnline.layers = function () {
     var addJSLinkToView = function (listName, viewName) {
         var dfd = jQuery.Deferred();
 
-        var url = smilOnline.baseServiceUrl + "/web/lists/GetByTitle('" + listName + "')/views/getbytitle('" + viewName + "')?@target='" + smilOnline.hostWebUrl + "'";
+        var url = geo365.baseServiceUrl + "/web/lists/GetByTitle('" + listName + "')/views/getbytitle('" + viewName + "')?@target='" + geo365.hostWebUrl + "'";
         var requestDigest = jQuery("#__REQUESTDIGEST").val();
 
-        var data = { __metadata: { type: 'SP.View' }, JSLink: "~site/SmilOnlineAssets/smilOnlineMap.js" }
+        var data = { __metadata: { type: 'SP.View' }, JSLink: "~site/geo365Assets/geo365Map.js" }
 
         jQuery.ajax({
             url: url,
@@ -211,7 +211,7 @@ smilOnline.layers = function () {
         var dfd = jQuery.Deferred();
 
 
-        var url = smilOnline.baseServiceUrl + "/web/lists/GetByTitle('" + listName + "')/Forms?$select=ServerRelativeUrl&@target='" + smilOnline.hostWebUrl + "'";
+        var url = geo365.baseServiceUrl + "/web/lists/GetByTitle('" + listName + "')/Forms?$select=ServerRelativeUrl&@target='" + geo365.hostWebUrl + "'";
 
         jQuery.ajax({
             url: url,
@@ -260,7 +260,7 @@ smilOnline.layers = function () {
             dfd.resolve();
         }
         else {
-            var url = smilOnline.baseServiceUrl + "/web/GetFileByServerRelativeUrl('" + form.ServerRelativeUrl + "')/GetLimitedWebPartManager(scope=1)/WebParts?$expand=WebPart&@target='" + smilOnline.hostWebUrl + "'";
+            var url = geo365.baseServiceUrl + "/web/GetFileByServerRelativeUrl('" + form.ServerRelativeUrl + "')/GetLimitedWebPartManager(scope=1)/WebParts?$expand=WebPart&@target='" + geo365.hostWebUrl + "'";
 
             jQuery.ajax({
                 url: url,

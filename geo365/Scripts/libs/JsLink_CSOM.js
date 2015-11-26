@@ -6,10 +6,10 @@
         }
 
         var webPartId = new SP.Guid(wpId);
-        var ctx = new SP.ClientContext(smilOnline.appWebUrl);
-        var factory = new SP.ProxyWebRequestExecutorFactory(smilOnline.appWebUrl);
+        var ctx = new SP.ClientContext(geo365.appWebUrl);
+        var factory = new SP.ProxyWebRequestExecutorFactory(geo365.appWebUrl);
         ctx.set_webRequestExecutorFactory(factory);
-        var appContextSite = new SP.AppContextSite(ctx, smilOnline.hostWebUrl);
+        var appContextSite = new SP.AppContextSite(ctx, geo365.hostWebUrl);
         var page = appContextSite.get_web().getFileByServerRelativeUrl(pagePath);
         var wpm = page.getLimitedWebPartManager(SP.WebParts.PersonalizationScope.shared);
         var webpartDefinitions = wpm.get_webParts();
@@ -21,7 +21,7 @@
             var webPartProperties = webPart.get_properties();
             ctx.load(webPartProperties);
             ctx.executeQueryAsync(function () {
-                webPartProperties.set_item("JSLink", "~site/SmilOnlineAssets/smilOnlineMap.js");
+                webPartProperties.set_item("JSLink", "~site/geo365Assets/geo365Map.js");
                 webPartDefinition.saveWebPartChanges();
                 ctx.executeQueryAsync(function () {
                     dfd.resolve();

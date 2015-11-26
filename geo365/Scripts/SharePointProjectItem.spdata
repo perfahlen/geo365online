@@ -18,7 +18,7 @@
     <ProjectItemFile Source="common.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="libs\JsLink_CSOM.js" Target="Scripts\libs\" Type="ElementFile" />
     <ProjectItemFile Source="deployToSP.js" Target="Scripts\" Type="ElementFile" />
-    <ProjectItemFile Source="smilOnlineMap.js" Target="Scripts\" Type="ElementFile" />
+    <ProjectItemFile Source="geo365Map.js" Target="Scripts\" Type="ElementFile" />
     <ProjectItemFile Source="libs\DrawingToolsModule.js" Target="Scripts\libs\" Type="ElementFile" />
   </Files>
 </ProjectItem>

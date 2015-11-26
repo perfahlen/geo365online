@@ -1,8 +1,8 @@
 ﻿'use strict';
 
-var smilOnline = smilOnline || {};
+var geo365 = geo365 || {};
 
-smilOnline.config = function () {
+geo365.config = function () {
     var _center = {};
     var _zoom = null;
     var _bingKey = "";

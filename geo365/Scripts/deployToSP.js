@@ -1,6 +1,6 @@
-﻿smilOnline.deployToSP = (function () {
+﻿geo365.deployToSP = (function () {
 
-    var jsFiles = ["smilOnlineMap.js", "config.js", "configParser.js", "libs/DrawingToolsModule.js", "libs/WKTModule-min.js"];
+    var jsFiles = ["geo365Map.js", "config.js", "configParser.js", "libs/DrawingToolsModule.js", "libs/WKTModule-min.js"];
     var imageFiles = ["DrawingTools_ToolbarIcons.png", "marker.png", "polygon.png", "polyline.png"];
     var cssFiles = ["DrawingTools.css"];
 
@@ -57,7 +57,7 @@
             dfd = jQuery.Deferred();
         }
         var fileToCopy = imageFiles.pop();
-        var fileUrl = decodeURIComponent(smilOnline.getQueryStringParameter("SPAppWebUrl"));
+        var fileUrl = decodeURIComponent(geo365.getQueryStringParameter("SPAppWebUrl"));
         fileUrl += "/Images/" + fileToCopy;
 
         var xhr = new XMLHttpRequest();
@@ -89,7 +89,7 @@
             if (evt.target.readyState === FileReader.DONE) {
                 var self = this;
                 var content = evt.target.result;
-                var url = smilOnline.baseServiceUrl + "/web/getfolderbyserverrelativeurl('" + smilOnline.serverRelativeUrl + "/SmilOnlineAssets')/files/add(overwrite=true,url='" + this.destinationName + "')?@target='" + smilOnline.hostWebUrl + "'";
+                var url = geo365.baseServiceUrl + "/web/getfolderbyserverrelativeurl('" + geo365.serverRelativeUrl + "/geo365Assets')/files/add(overwrite=true,url='" + this.destinationName + "')?@target='" + geo365.hostWebUrl + "'";
                 var digest = jQuery("#__REQUESTDIGEST").val();
                 jQuery.ajax({
                     url: url,
@@ -125,7 +125,7 @@
 
     var getTextSource = function (fileName) {
         var dfd = jQuery.Deferred();
-        var fileUrl = decodeURIComponent(smilOnline.getQueryStringParameter("SPAppWebUrl"));
+        var fileUrl = decodeURIComponent(geo365.getQueryStringParameter("SPAppWebUrl"));
 
         fileUrl += fileName;
 
@@ -143,7 +143,7 @@
         var dfd = jQuery.Deferred();
         var pathPieces = destinationName.split("/");
         destinationName = pathPieces[pathPieces.length - 1]; // destinationName.replace("libs/", "");
-        var url = smilOnline.baseServiceUrl + "/web/getfolderbyserverrelativeurl('" + smilOnline.serverRelativeUrl + "/SmilOnlineAssets')/files/add(overwrite=true,url='" + destinationName + "')?@target='" + smilOnline.hostWebUrl + "'";
+        var url = geo365.baseServiceUrl + "/web/getfolderbyserverrelativeurl('" + geo365.serverRelativeUrl + "/geo365Assets')/files/add(overwrite=true,url='" + destinationName + "')?@target='" + geo365.hostWebUrl + "'";
 
         jQuery.ajax({
             url: url,

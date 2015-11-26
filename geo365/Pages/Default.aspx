@@ -60,7 +60,7 @@
     <div id="info">
         <p>
             It seems to be the first time you use this app, you need to fill in some configuration including a Bing Maps key. You can get a key from <a target="_blank" href="https://www.bingmapsportal.com">Bing Map Portal</a>.
-            This application will create a documentlibrary called SmilOnlineAssets to store configuration on the site. 
+            This application will create a documentlibrary called geo365Assets to store configuration on the site. 
             Enjoy.
         </p>
         <input type="button" id="infoOK" value="OK" />

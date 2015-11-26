@@ -1,4 +1,4 @@
-﻿var smilOnline = smilOnline || {};
+﻿var geo365 = geo365 || {};
 
 var guid = (function () {
     function s4() {
@@ -12,7 +12,7 @@ var guid = (function () {
     };
 })();
 
-var smilOnline = function () {
+var geo365 = function () {
 
     var siteUrl = function () {
         var url = _spPageContextInfo.webAbsoluteUrl;
@@ -21,7 +21,7 @@ var smilOnline = function () {
 
     var loadConfig = function (callback) {
         var req = new XMLHttpRequest();
-        var requestUrl = siteUrl() + "/SmilOnlineAssets/smilOnline.jsn";
+        var requestUrl = siteUrl() + "/geo365Assets/geo365.jsn";
         req.open("GET", requestUrl);
 
         req.setRequestHeader("accept", "application/json; odata=verbose");
@@ -52,13 +52,13 @@ var smilOnline = function () {
     };
 
     var viewList = function (ctx) {
-        smilOnline.state = "list";
+        geo365.state = "list";
         var list = ctx.ListTitle;
         var geom = ctx.CurrentItem[ctx.CurrentFieldSchema.Name];
         if (geom && geom != '') {
-            var image = /point/i.test(geom) ? (smilOnline.getSiteUrl() + "/SmilOnlineAssets/marker.png") : /polygon/i.test(geom) ?
-                (smilOnline.getSiteUrl() + "/SmilOnlineAssets/polygon.png") : (smilOnline.getSiteUrl() + "/SmilOnlineAssets/polyline.png");
-            return '<img data-geom="' + geom + '" src="' + image + '"style="position: relative; left : 40%;" onmouseover="smilOnline.displayListMap(this);" />';
+            var image = /point/i.test(geom) ? (geo365.getSiteUrl() + "/geo365Assets/marker.png") : /polygon/i.test(geom) ?
+                (geo365.getSiteUrl() + "/geo365Assets/polygon.png") : (geo365.getSiteUrl() + "/geo365Assets/polyline.png");
+            return '<img data-geom="' + geom + '" src="' + image + '"style="position: relative; left : 40%;" onmouseover="geo365.displayListMap(this);" />';
         }
         return '<span></span>';
     };
@@ -79,33 +79,33 @@ var smilOnline = function () {
     var renderPreviewMap = function (sourceElem, renderElem) {
         var wkt = sourceElem.getAttribute("data-geom");
         var feature = WKTModule.Read(wkt);
-        smilOnline.mapOptions.disableZooming = true;
-        smilOnline.mapOptions.disablePanning = true;
-        smilOnline.mapOptions.enableClickableLogo = false;
-        smilOnline.mapOptions.enableSearchLogo = false;
-        smilOnline.mapOptions.showDashboard = false;
-        smilOnline.map = new Microsoft.Maps.Map(renderElem, smilOnline.mapOptions);
+        geo365.mapOptions.disableZooming = true;
+        geo365.mapOptions.disablePanning = true;
+        geo365.mapOptions.enableClickableLogo = false;
+        geo365.mapOptions.enableSearchLogo = false;
+        geo365.mapOptions.showDashboard = false;
+        geo365.map = new Microsoft.Maps.Map(renderElem, geo365.mapOptions);
         zoomToEntity(feature);
-        smilOnline.map.entities.push(feature);
+        geo365.map.entities.push(feature);
     };
 
     var displayForm = function (ctx) {
-        smilOnline.state = "view";
+        geo365.state = "view";
         var mapElem = createMapElement(ctx);
         return mapElem;
     };
 
     var newForm = function (ctx) {
-        smilOnline.state = "new";
+        geo365.state = "new";
         var geoElem = createNewEditFormMap(ctx);
-        geoElem += '<input type="text" id="' + smilOnline.geomTxtfieldId + '" style="visibility: visible;" />';
+        geoElem += '<input type="text" id="' + geo365.geomTxtfieldId + '" style="visibility: visible;" />';
         return geoElem;
     };
 
     var editForm = function (ctx) {
-        smilOnline.state = "edit";
+        geo365.state = "edit";
         var geoElem = createNewEditFormMap(ctx);
-        geoElem += '<input type="text" id="' + smilOnline.geomTxtfieldId + '" value="' + ctx.CurrentFieldValue + '" style="visibility: visible;" />';
+        geoElem += '<input type="text" id="' + geo365.geomTxtfieldId + '" value="' + ctx.CurrentFieldValue + '" style="visibility: visible;" />';
         return geoElem;
     };
 
@@ -117,14 +117,14 @@ var smilOnline = function () {
         geoElem += createToolbar();
         geoElem += createMapElement(ctx);
 
-        smilOnline.geomTxtfieldId = (formContext.fieldSchema.Id + '_' + formContext.fieldName);
+        geo365.geomTxtfieldId = (formContext.fieldSchema.Id + '_' + formContext.fieldName);
         return geoElem;
     };
 
     var createToolbar = function () {
         var elemID = this.guid();
         var elem = '<div style="height: 34px; margin-bottom: 5px; width: 400px; position: relative; background-color: #FAF7F5" id="' + elemID + '"></div>';
-        smilOnline.toolbarElementId = elemID;
+        geo365.toolbarElementId = elemID;
         return elem;
     };
 
@@ -132,23 +132,23 @@ var smilOnline = function () {
         var elemID = this.guid();
         var elem;
         var geom = ctx.CurrentFieldValue.replace('<div dir="">', "").replace("</div>", "");
-        if (smilOnline.state === "edit" && geom === '') {
+        if (geo365.state === "edit" && geom === '') {
             elem = '<div style="height: 400px; width: 400px; position: relative;" id="' + elemID + '"></div>';
         } else {
             elem = '<div data-geom="' + geom + '" style="height: 400px; width: 400px; position: relative;" id="' + elemID + '"></div>';
         }
-        smilOnline.renderElemId = elemID;
+        geo365.renderElemId = elemID;
         return elem;
     };
 
     var renderMap = function () {
         var intervalId = setInterval(function () {
-            if (smilOnline.bingMaps && Microsoft && Microsoft.Maps && Microsoft.Maps.Map) {
+            if (geo365.bingMaps && Microsoft && Microsoft.Maps && Microsoft.Maps.Map) {
 
                 clearInterval(intervalId);
                 loadConfig(function (config) {
-                    smilOnline.mapOptions = smilOnline.configParser.getMapOptions(config);
-                    switch (smilOnline.state) {
+                    geo365.mapOptions = geo365.configParser.getMapOptions(config);
+                    switch (geo365.state) {
                         case "edit":
                             loadModule("wkt", function () {
                                 loadModule("drawingtools", function () {
@@ -181,15 +181,15 @@ var smilOnline = function () {
 
 
     var renderViewMap = function () {
-        var elem = document.getElementById(smilOnline.renderElemId);
-        smilOnline.map = new Microsoft.Maps.Map(elem, smilOnline.mapOptions);
+        var elem = document.getElementById(geo365.renderElemId);
+        geo365.map = new Microsoft.Maps.Map(elem, geo365.mapOptions);
         var wktValue = elem.getAttribute("data-geom");
         if (wktValue === "") {
             elem.style.display = "none";
 
         } else {
             var geom = WKTModule.Read(wktValue);
-            smilOnline.map.entities.push(geom);
+            geo365.map.entities.push(geom);
             zoomToEntity(geom);
         }
     };
@@ -197,11 +197,11 @@ var smilOnline = function () {
     var zoomToEntity = function (entity) {
         var locations = getLocations(entity);
         if (locations.length === 1) {
-            smilOnline.map.setView({ center: locations[0], zoom: 13 });
+            geo365.map.setView({ center: locations[0], zoom: 13 });
         }
         else if (locations.length > 1) {
             var locationRect = Microsoft.Maps.LocationRect.fromLocations(locations);
-            smilOnline.map.setView({ bounds: locationRect });
+            geo365.map.setView({ bounds: locationRect });
         }
     };
 
@@ -218,7 +218,7 @@ var smilOnline = function () {
     };
 
     var setDigitizerIcons = function () {
-        var imageUrl = (smilOnline.getSiteUrl() + '/SmilOnlineAssets/DrawingTools_ToolbarIcons.png');
+        var imageUrl = (geo365.getSiteUrl() + '/geo365Assets/DrawingTools_ToolbarIcons.png');
 
         var polyLineElem = document.getElementsByClassName("drawingToolsIcon_polyline")[0];
         polyLineElem.style.backgroundImage = 'url("' + imageUrl + '")';
@@ -240,12 +240,12 @@ var smilOnline = function () {
     var renderEditMap = function () {
         var geom;
 
-        var elem = document.getElementById(smilOnline.renderElemId);
-        smilOnline.map = new Microsoft.Maps.Map(elem, smilOnline.mapOptions);
+        var elem = document.getElementById(geo365.renderElemId);
+        geo365.map = new Microsoft.Maps.Map(elem, geo365.mapOptions);
 
 
-        if (smilOnline.state === "edit") {
-            var wktValue = document.getElementById(smilOnline.geomTxtfieldId).value;
+        if (geo365.state === "edit") {
+            var wktValue = document.getElementById(geo365.geomTxtfieldId).value;
             var geom = WKTModule.Read(wktValue);
             zoomToEntity(geom);
         }
@@ -253,10 +253,10 @@ var smilOnline = function () {
     };
 
     var setupToolbar = function (geom) {
-        var toolbarElement = document.getElementById(smilOnline.toolbarElementId);
+        var toolbarElement = document.getElementById(geo365.toolbarElementId);
         Microsoft.Maps.loadModule("DrawingToolsModule", {
             callback: function () {
-                drawingTools = new DrawingTools.DrawingManager(smilOnline.map, {
+                drawingTools = new DrawingTools.DrawingManager(geo365.map, {
                     toolbarContainer: toolbarElement,
                     toolbarOptions: {
                         drawingModes: ['pushpin', 'polyline', 'polygon', 'edit', 'erase'],
@@ -273,15 +273,15 @@ var smilOnline = function () {
                             updateGeomTextField(feature);
                         },
                         drawingErased: function () {
-                            var geoTextField = document.getElementById(smilOnline.geomTxtfieldId);
+                            var geoTextField = document.getElementById(geo365.geomTxtfieldId);
                             geoTextField.value = "";
                         }
                     }
                 });
 
                 setDigitizerIcons();
-                if (smilOnline.state === "edit" && geom && geom != "") {
-                    var drawingLayer = smilOnline.map.entities.get(0);
+                if (geo365.state === "edit" && geom && geom != "") {
+                    var drawingLayer = geo365.map.entities.get(0);
                     drawingLayer.push(geom);
                 }
             }
@@ -289,7 +289,7 @@ var smilOnline = function () {
     };
 
     var updateGeomTextField = function (feature) {
-        var geoTextField = document.getElementById(smilOnline.geomTxtfieldId);
+        var geoTextField = document.getElementById(geo365.geomTxtfieldId);
         var wkt = WKTModule.Write(feature);
         geoTextField.value = wkt;
     };
@@ -297,7 +297,7 @@ var smilOnline = function () {
     var loadModule = function (module, callback) {
 
         if (module === "wkt") {
-            Microsoft.Maps.registerModule("WKTModule", (smilOnline.getSiteUrl() + "/SmilOnlineAssets/WKTModule-min.js"));
+            Microsoft.Maps.registerModule("WKTModule", (geo365.getSiteUrl() + "/geo365Assets/WKTModule-min.js"));
             Microsoft.Maps.loadModule("WKTModule", {
                 callback: function () {
                     if (callback) {
@@ -307,7 +307,7 @@ var smilOnline = function () {
             });
         }
         else if (module === "drawingtools") {
-            Microsoft.Maps.registerModule("DrawingToolsModule", (smilOnline.getSiteUrl() + "/SmilOnlineAssets/DrawingToolsModule.js"));
+            Microsoft.Maps.registerModule("DrawingToolsModule", (geo365.getSiteUrl() + "/geo365Assets/DrawingToolsModule.js"));
             callback();
         }
     };
@@ -343,7 +343,7 @@ var smilOnline = function () {
         var css = document.createElement("link");
         css.type = "text/css";
         css.rel = "Stylesheet";
-        css.href = (smilOnline.getSiteUrl() + "/SmilOnlineAssets/DrawingTools.css");
+        css.href = (geo365.getSiteUrl() + "/geo365Assets/DrawingTools.css");
 
         document.body.appendChild(css);
     };
@@ -367,14 +367,14 @@ document.onreadystatechange = function () {
     var state = document.readyState;
     if (state == 'complete') {
         var scriptsToAdd = ["//ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0&s=1",
-                           (smilOnline.getSiteUrl() + "/SmilOnlineAssets/config.js"),
-                           (smilOnline.getSiteUrl() + "/SmilOnlineAssets/configParser.js")];
+                           (geo365.getSiteUrl() + "/geo365Assets/config.js"),
+                           (geo365.getSiteUrl() + "/geo365Assets/configParser.js")];
 
-        smilOnline.addScript(scriptsToAdd, function scriptsLoaded() {
-            smilOnline.bingMaps = true;
-            smilOnline.renderMap();
+        geo365.addScript(scriptsToAdd, function scriptsLoaded() {
+            geo365.bingMaps = true;
+            geo365.renderMap();
         });
-        smilOnline.addCss();
+        geo365.addCss();
     }
 };
 
@@ -384,10 +384,10 @@ document.onreadystatechange = function () {
     geometryContext.Templates = {};
     geometryContext.Templates.Fields = {
         'Geometry': {
-            'View': smilOnline.viewList,
-            'DisplayForm': smilOnline.displayForm,
-            'EditForm': smilOnline.editForm,
-            'NewForm': smilOnline.newForm
+            'View': geo365.viewList,
+            'DisplayForm': geo365.displayForm,
+            'EditForm': geo365.editForm,
+            'NewForm': geo365.newForm
         }
     };
 
