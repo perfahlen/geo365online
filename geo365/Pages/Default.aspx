@@ -16,10 +16,10 @@
     <!-- Add your CSS styles to the following file -->
     <link rel="Stylesheet" type="text/css" href="../Content/App.css" />
     <link href="../Content/font-awesome.min.css" rel="stylesheet" />
-    
+
 
     <!-- Add your JavaScript to the following file -->
-    <script  type="text/javascript" src="../_layouts/15/SP.RequestExecutor.js"></script>
+    <script type="text/javascript" src="../_layouts/15/SP.RequestExecutor.js"></script>
     <script type="text/javascript" src="../Scripts/BingMapsExtension.js"></script>
     <script type="text/javascript" src="../Scripts/libs/V7CustomInfobox.min.js"></script>
     <script type="text/javascript" src="../Scripts/app.js"></script>
@@ -35,7 +35,7 @@
 
 <%-- The markup in the following Content element will be placed in the TitleArea of the page --%>
 <asp:Content ContentPlaceHolderID="PlaceHolderPageTitleInTitleArea" runat="server">
-    Page Title
+    Geo365
 </asp:Content>
 
 <%-- The markup and script in the following Content element will be placed in the <body> of the page --%>
@@ -47,9 +47,10 @@
     <div id="layerWidget">
         <div id="spLayers"><span id="layerWidgetHeadline" class="layerWidgetHeaders">SharePoint Layers</span>&nbsp;<span id="layerWidgetIcon" class="fa fa-spinner fa-spin"></span></div>
         <div id="spLayersList">
-        <ul></ul>
+            <ul></ul>
         </div>
-        <div id="layerAdminToolbar" class="layerWidgetHeaders">Add layers
+        <div id="layerAdminToolbar" class="layerWidgetHeaders">
+            Add layers
             <i class="fa fa-chevron-right fa-1"></i>
         </div>
         <div id="layerAdminLayerList">
@@ -58,14 +59,25 @@
     </div>
 
     <div id="info">
+        <h1>Welcome!</h1>
+        <p>
+            With this app you will be able to geo-enable your SharePoint content and get a map view of your site content!
+        </p>
         <p>
             It seems to be the first time you use this app, you need to fill in some configuration including a Bing Maps key. You can get a key from <a target="_blank" href="https://www.bingmapsportal.com">Bing Map Portal</a>.
-            This application will create a documentlibrary called geo365Assets to store configuration on the site. 
-            Enjoy.
+                This application will create a documentlibrary called geo365Assets to store configuration on the site. 
         </p>
-        <input type="button" id="infoOK" value="OK" />
+        <p>
+            Enjoy.
+            <input type="button" id="infoOK" value="OK" />
+        </p>
+        <hr />
+        <video src="http://geo365.io/GEO365-preso-mov1-low.mp4" controls width="90%">
+
+       </video>
+        
     </div>
-    
+
     <div id="cover">
         <div id="workingWidget" class="centerWidget">
             <div class="widgetForm centerText">
@@ -73,7 +85,7 @@
             </div>
             <div class="centerText"><i class="fa fa-spin fa-spinner" style="font-size: 7em;"></i></div>
         </div>
-        
+
         <div id="confirmationWidget" class="centerWidget">
             <div class="widgetForm">
                 Are you sure you want to add Geometry field to list <i><span id="addToListNameId"></span></i>?
