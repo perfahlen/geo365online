@@ -3,7 +3,7 @@
 <App xmlns="http://schemas.microsoft.com/sharepoint/2012/app/manifest"
      Name="GEO365"
      ProductID="{dc063326-9ab1-437b-84ae-3fb6100756e0}"
-     Version="1.0.1.2"
+     Version="1.0.2.0"
      SharePointMinVersion="15.0.0.0"
 >
   <Properties>
